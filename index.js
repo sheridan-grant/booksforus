@@ -22,9 +22,9 @@ function bookRoute(req, res) {
   getBooks(function(error, result) {
 
 		if (error || result == null || result.length != 1) {
-			response.status(500).json({success: false, data: error});
+			res.status(500).json({success: false, data: error});
 		} else {
-			response.status(200).json(result[0]);
+			res.status(200).json(result[0]);
 		}
 	});
 }
