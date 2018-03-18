@@ -8,8 +8,6 @@ const client = new Client({
   ssl: true,
 });
 
-client.connect();
-
 express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
