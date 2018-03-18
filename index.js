@@ -20,8 +20,8 @@ express()
 
 function bookRoute(req, res) {
   getBooks(function(error, result) {
-    console.log(result);
-		if (error || result == null || result.length != 1) {
+
+		if (error || result == null) {
 			res.status(500).json({success: false, data: error});
 		} else {
 			res.status(200).json(result.rows);
