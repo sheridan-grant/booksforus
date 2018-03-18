@@ -15,7 +15,6 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-  .get('/user/:username/:password', (req, res) => res.render('pages/index'))
   .get('/books', function(req, res) {
     client.query('SELECT * FROM book;', (err, res) => {
       if (err) throw err;
@@ -25,6 +24,4 @@ express()
       client.end();
     });
   })
-  .get('/author', (req, res) => res.render('pages/index'))
-  .get('/comments', (req, res) => res.render('pages/index'))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
