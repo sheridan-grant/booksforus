@@ -1,4 +1,4 @@
-CREATE TABLE user (
+CREATE TABLE users (
   user_id  SERIAL PRIMARY KEY,
   username TEXT,
   password TEXT
@@ -18,8 +18,8 @@ CREATE TABLE book (
 );
 
 CREATE TABLE favorite_books_list (
-user_id INTEGER REFERENCES user(user_id),
-book_id INTEGER REFERENCES book(book_id)
+user_id INTEGER REFERENCES users(user_id),
+book_id INTEGER REFERENCES book(book_id),
 PRIMARY KEY(user_id, book_id)
 );
 
@@ -32,7 +32,7 @@ CREATE TABLE book_comment (
 CREATE TABLE comment (
   comment_id   SERIAL PRIMARY KEY,
   comment_text TEXT,
-  user_id      INTEGER REFERENCES user(user_id)
+  user_id      INTEGER REFERENCES users(user_id)
 );
 
 CREATE TABLE comment_replies (
@@ -41,14 +41,6 @@ CREATE TABLE comment_replies (
   PRIMARY KEY(parent_comment_id, child_comment_id)
 );
 
-INSERT INTO user (username, password) values
-  ('Grant', 'Grant');
-
-INSERT INTO author (name) values
-  ('Brandon Sanderson'), ('Brent Weeks');
-
-INSERT INTO book (title, description, score, author_id) values
-  ('Mistborn', 'Mistborn is about a revolution.', 0, 1),
-  ('The Well of Ascension', 'The aftermath of the revolution.', 0, 1),
-  ('The Black Prism', 'A land ruled by color is falling apart.', 0, 2),
-  ('The Way of the Sahdows', 'The story of the greatest assassin.', 0, 2);
+CREATE USER g_s WITH PASSWORD 'grant';
+GRANT SELECT, INSERT, UPDATE ON person TO g_s;
+GRANT USAGE, SELECT ON SEQUENCE person_id_seq TO g_s;
