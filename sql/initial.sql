@@ -40,7 +40,3 @@ CREATE TABLE comment_replies (
   child_comment_id  INTEGER REFERENCES comment(comment_id),
   PRIMARY KEY(parent_comment_id, child_comment_id)
 );
-
-CREATE USER g_s WITH PASSWORD 'grant';
-GRANT SELECT, INSERT, UPDATE ON person TO g_s;
-GRANT USAGE, SELECT ON SEQUENCE person_id_seq TO g_s;
