@@ -16,24 +16,49 @@ express()
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/books', function(req, res) {
-    client.query('SELECT * FROM book;', (err, res) => {
-      if (err) throw err;
-      var data = [];
-      for (let row of res.rows) {
-        data.push(JSON.stringify(row));
+    bookRoute(req, res);
+  })
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
+function bookRoute(req, res) {
+  getBooks(function(error, result) {
+
+		if (error || result == null || result.length != 1) {
+			response.status(500).json({success: false, data: error});
+		} else {
+			response.status(200).json(result[0]);
+		}
+	});
+}
+
+function getBooks(callback) {
+  client.connect(function(err) {
+    if (err) {
+      console.log("Error connecting to DB: ")
+      console.log(err);
+      callback(err, null);
+    }
+
+    var sql = "SELECT * FROM book;";
+    var params = [];
+
+    var query = client.query(sql, params, function(err, result) {
+      // we are now done getting the data from the DB, disconnect the client
+      client.end(function(err) {
+        if (err) throw err;
+      });
+
+      if (err) {
+        console.log("Error in query: ")
+        console.log(err);
+        callback(err, null);
       }
 
-      data = data.join(' :: ');
-      
-      client.end();
-    });
+      console.log("Found result: " + JSON.stringify(result.rows));
 
-    res.writeHead(200, {
-      'Content-Type': 'text/html'
+      // call whatever function the person that called us wanted, giving it
+      // the results that we have been compiling
+      callback(null, result.rows);
     });
-    res.write('<!doctype html>\n<html lang="en">\n' +
-    '\n<meta charset="utf-8">\n<title>Books</title>\n' +
-    '\n\n<h1>Here are the books</h1>\n');
-    res.end();
-  })
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+  });
+}
