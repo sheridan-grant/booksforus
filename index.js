@@ -18,10 +18,15 @@ express()
   .get('/books', function(req, res) {
     client.query('SELECT * FROM book;', (err, res) => {
       if (err) throw err;
+      var rows = [];
       for (let row of res.rows) {
-        console.log(JSON.stringify(row));
+        rows.push(JSON.stringify(row));
       }
       client.end();
+      res.write('<!doctype html>\n<html lang="en">\n' +
+      '\n<meta charset="utf-8">\n<title>Test web page on node.js</title>\n' +
+      '\n\n<h1>Here are the books</h1>\n' + rows.join(' :: ') + '\n\n');
+      res.end();
     });
   })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
