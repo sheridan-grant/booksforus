@@ -23,8 +23,12 @@ express()
         rows.push(JSON.stringify(row));
       }
       client.end();
+
+      res.writeHead(200, {
+        'Content-Type': 'text/html'
+      });
       res.write('<!doctype html>\n<html lang="en">\n' +
-      '\n<meta charset="utf-8">\n<title>Test web page on node.js</title>\n' +
+      '\n<meta charset="utf-8">\n<title>Books</title>\n' +
       '\n\n<h1>Here are the books</h1>\n' + rows.join(' :: ') + '\n\n');
       res.end();
     });
