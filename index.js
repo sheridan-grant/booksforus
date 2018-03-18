@@ -24,7 +24,7 @@ function bookRoute(req, res) {
 		if (error || result == null || result.length != 1) {
 			res.status(500).json({success: false, data: error});
 		} else {
-			res.status(200).json(result[0]);
+			res.status(200).json(result.rows);
 		}
 	});
 }
