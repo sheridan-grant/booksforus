@@ -16,14 +16,17 @@ express()
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/books', function(req, res) {
-    // client.query('SELECT * FROM book;', (err, res) => {
-    //   if (err) throw err;
-    //   var rows = [];
-    //   for (let row of res.rows) {
-    //     rows.push(JSON.stringify(row));
-    //   }
-    //   client.end();
-    // });
+    client.query('SELECT * FROM book;', (err, res) => {
+      if (err) throw err;
+      var data = [];
+      for (let row of res.rows) {
+        data.push(JSON.stringify(row));
+      }
+
+      data = data.join(' :: ');
+      
+      client.end();
+    });
 
     res.writeHead(200, {
       'Content-Type': 'text/html'
