@@ -15,7 +15,9 @@ express()
 
 function bookRoute(req, res) {
   getBooks(function(error, result) {
-    var json['data'] = result.rows;
+    var json = {};
+
+    json['data'] = result.rows;
 
 		if (error || result == null) {
 			res.status(500).json({success: false, data: error});
