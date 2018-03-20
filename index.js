@@ -15,12 +15,12 @@ express()
 
 function bookRoute(req, res) {
   getBooks(function(error, result) {
-    console.log(error);
-    console.log(result);
+    var json['data'] = result.rows;
+
 		if (error || result == null) {
 			res.status(500).json({success: false, data: error});
 		} else {
-			res.status(200).json(result.rows);
+			res.status(200).json(json);
 		}
 	});
 }
@@ -30,7 +30,7 @@ function getBooks(callback) {
     connectionString: process.env.DATABASE_URL,
     ssl: true,
   });
-  
+
   client.connect(function(err) {
     if (err) {
       console.log("Error connecting to DB: ")
@@ -42,7 +42,7 @@ function getBooks(callback) {
     var params = [];
 
     client.query(sql, params, function(err, result) {
-      // we are now done getting the data from the DB, disconnect the client
+
       client.end(function(err) {
         if (err) throw err;
       });
@@ -53,11 +53,7 @@ function getBooks(callback) {
         callback(err, null);
       }
 
-      console.log("Found result: " + JSON.stringify(result.rows));
-
-      // call whatever function the person that called us wanted, giving it
-      // the results that we have been compiling
-      callback(null, result.rows[0]);
+      callback(null, result.rows);
     });
   });
 }
