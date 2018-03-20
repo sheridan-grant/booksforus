@@ -41,7 +41,7 @@ function getBooks(callback) {
     var sql = "SELECT * FROM book;";
     var params = [];
 
-    var query = client.query(sql, params, function(err, result) {
+    client.query(sql, params, function(err, result) {
       // we are now done getting the data from the DB, disconnect the client
       client.end(function(err) {
         if (err) throw err;
@@ -57,7 +57,7 @@ function getBooks(callback) {
 
       // call whatever function the person that called us wanted, giving it
       // the results that we have been compiling
-      callback(null, result.rows);
+      callback(null, result.rows[0]);
     });
   });
 }
