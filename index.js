@@ -15,11 +15,11 @@ express()
 
 function bookRoute(req, res) {
   getBooks(function(error, result) {
-    var json = { 'data' : result.rows };
+    console.log(result.rows);
 		if (error || result == null) {
 			res.status(500).json({success: false, data: error});
 		} else {
-			res.status(200).json(json);
+			res.status(200).json({ 'data' : result.rows });
 		}
 	});
 }
