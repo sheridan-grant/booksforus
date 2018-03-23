@@ -1,5 +1,10 @@
+body {
+  background-color: #c9daf8;
+}
+
 .wrapper {
   display: flex;
+  display: inline-block;
 }
 
 #sidebar {
@@ -7,9 +12,8 @@
   max-width: 250px;
   height: 100vh;
   background-color: #6d9eeb;
-  display: inline-block;
 }
 
 #content {
-  
+  display: inline-block;
 }
