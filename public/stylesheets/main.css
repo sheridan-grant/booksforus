@@ -4,7 +4,6 @@ body {
 
 .wrapper {
   display: flex;
-  display: inline-block;
 }
 
 #sidebar {
