@@ -1,7 +1,3 @@
-body {
-  background-color: #c9daf8;
-}
-
 .wrapper {
   display: flex;
 }
@@ -10,9 +6,95 @@ body {
   min-width: 250px;
   max-width: 250px;
   height: 100vh;
-  background-color: #6d9eeb;
+  background-color: #3A619E;
+  box-shadow: 1px 0px 8px;
+}
+
+.side-bar-btn {
+  background-color: #162D51;
+  text-align: center;
+  border: none;
+  width: 100%;
+}
+
+.side-bar-btn h2 {
+  margin-top: 10px;
+  font-weight: bold;
+  color: white;
+}
+
+.add-button {
+  background-color: #162D51;
+  color: white;
+  border: none;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 #content {
-  display: inline-block;
+  width: 100%;
+}
+
+.add-book-form {
+  background-color: white;
+  padding: 5px;
+  border: 1px solid #162d51;
+}
+
+/* Heading */
+.heading {
+  text-align: center;
+  font-size: 75px;
+  font-weight: bold;
+  color: #9D6D0B;
+}
+
+/* Main Content */
+
+.content-body {
+  width: fit-content;
+  padding: 5px;
+  margin: 0 auto;
+}
+
+
+/* Login Form */
+.login-signup-form {
+  background-color: white;
+  padding: 5px;
+  border: 1px solid #162d51;
+}
+
+.login-button {
+  background-color: #162D51;
+  color: white;
+  border: none;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.signup-button {
+  background-color: #162D51;
+  color: white;
+  border: none;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* Cards */
+.card {
+  width: 25rem;
+  border: 1px solid #b7b7b7;
+  padding: 15px;
+}
+
+.score {
+  float: right;
+  padding-left: 10px;
 }
