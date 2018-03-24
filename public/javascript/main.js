@@ -18,7 +18,7 @@
                             "<li class=\"list-group-item\">" + tmp.author_id + "</li>" +
                             "<li class=\"list-group-item\">" +
                               "Score:" +
-                              "<span>" + tmp.score + "</span>" +
+                              "<span class=\"score\">" + tmp.score + "</span>" +
                               "<span class=\"score-vote glyphicon glyphicon-thumbs-up\"></span>" +
                               "<span class=\"score-vote glyphicon glyphicon-thumbs-down\"></span>" +
                             "</li>" +
