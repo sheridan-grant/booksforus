@@ -17,7 +17,7 @@
                             "<p class=\"card-text\">" + tmp.description + "</p>" +
                           "</div>" +
                           "<ul class=\"list-group list-group-flush\">" +
-                            "<li class=\"list-group-item\">" + tmp.author_id + "</li>" +
+                            "<li class=\"list-group-item\">" + tmp.name + "</li>" +
                             "<li class=\"list-group-item\">" +
                               "Score:" +
                               "<span class=\"score\">" + tmp.score + "</span>" +
