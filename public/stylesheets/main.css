@@ -92,6 +92,8 @@
   width: 25rem;
   border: 1px solid #b7b7b7;
   padding: 15px;
+  display: inline-grid;
+  margin: 15px;
 }
 
 .score {
