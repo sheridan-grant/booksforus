@@ -5,6 +5,8 @@
       if (this.readyState == 4 && this.status == 200) {
           var json = JSON.parse(this.responseText);
 
+          console.log(json);
+
           var html = "";
 
           for (var i = 0; i < json.data.length; i++) {
@@ -23,6 +25,7 @@
                               "<span class=\"score-vote glyphicon glyphicon-thumbs-down\"></span>" +
                             "</li>" +
                           "</ul>" +
+                          "<span class=\"glyphicon glyphicon-heart\"></span>" +
                         "</div>";
           }
 

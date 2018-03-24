@@ -37,7 +37,7 @@ function getBooks(callback) {
       callback(err, null);
     }
 
-    var sql = "SELECT * FROM book;";
+    var sql = "SELECT b.title, b.description, b.score, a.name FROM Book b, Author a WHERE b.author_id = a.author_id;";
     var params = [];
 
     client.query(sql, params, function(err, result) {
