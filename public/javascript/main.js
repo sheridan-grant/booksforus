@@ -19,8 +19,8 @@
                             "<li class=\"list-group-item\">" +
                               "Score:" +
                               "<span>" + tmp.score + "</span>" +
-                              "<span class=\"score glyphicon glyphicon-thumbs-up\"></span>" +
-                              "<span class=\"score glyphicon glyphicon-thumbs-down\"></span>" +
+                              "<span class=\"score-vote glyphicon glyphicon-thumbs-up\"></span>" +
+                              "<span class=\"score-vote glyphicon glyphicon-thumbs-down\"></span>" +
                             "</li>" +
                           "</ul>" +
                         "</div>";
