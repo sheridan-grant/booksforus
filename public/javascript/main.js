@@ -1,5 +1,4 @@
 angular.module('booksForUs', [])
-
 .controller('bookViewer', [ '$scope', '$http', function($scope, $http) {
   $scope.currentBooks = [];
 
@@ -38,5 +37,10 @@ angular.module('booksForUs', [])
       $scope.propertyName = 'score';
       $scope.reverse = true;
     }
+  };
+}])
+.controller('addingBooks', ['$scope', '$http', function($scope, $http) {
+  $scope.addBook = function() {
+    console.log($scope.newName + ' - ' + $scope.newAuthor + ' - ' + $scope.newDescription);
   };
 }]);
