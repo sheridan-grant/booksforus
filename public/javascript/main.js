@@ -1,3 +1,9 @@
+angular.module('booksForUs', [])
+
+.controller('bookViewer', [ '$scope', function($scope) {
+  
+}]);
+
 (function () {
 
   var xhttp = new XMLHttpRequest();
