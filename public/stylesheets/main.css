@@ -62,7 +62,7 @@
 /* Main Content */
 
 .content-body {
-  width: fit-content;
+  width: 90%;
   padding: 5px;
   margin: 0 auto;
 }
