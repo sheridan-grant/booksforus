@@ -9,7 +9,7 @@
 
     <div id="sidebar">
       <br>
-      <!-- Sidebar Links -->
+      <!-- Sidebar -->
       <ul id="sidebar-list" class="list-unstyled components">
         <li>
           <form class="login-signup-form" action="index.html" method="post">
@@ -61,17 +61,32 @@
       </div>
       <div class="content-body">
         <div class="" ng-controller="bookViewer">
+          <div class="filters">
 
-        </div>
-        <div class="filters">
-
-        </div>
-        <div class="results" id="results">
-
+          </div>
+          <div class="results">
+            <div class="card" ng-repeat="card in cards">
+              <div class="card-body">
+                <h5 class="card-title"> card.title </h5>
+                <p class="card-text"> card.description </p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  card.name
+                </li>
+                <li class="list-group-item">
+                  "Score:"
+                  <span class="score"> card.score </span>
+                  <span class="score-vote glyphicon glyphicon-thumbs-up"></span>
+                  <span class="score-vote glyphicon glyphicon-thumbs-down"></span>
+                </li>
+              </ul>
+              <span class="glyphicon glyphicon-heart"></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
   </div>
 </body>
 </html>
