@@ -58,6 +58,6 @@ angular.module('booksForUs', [])
 
     console.log(sortingParams.toString());
 
-    return sortingParams.toString();
+    return "[" + sortingParams.toString() + "]";
   }
 }]);
