@@ -3,13 +3,8 @@ angular.module('booksForUs', [])
 .controller('bookViewer', [ '$scope', '$http', function($scope, $http) {
   $scope.currentBooks = [];
 
-  $scope.propertyName = 'title'; 
-  $scope.reverse = true;
-
-  $scope.titleAcsend = false;
-  $scope.titleDesend = false;
-  $scope.scoreAcsend = false;
-  $scope.scoreDesend = false;
+  $scope.propertyName = 'title';
+  $scope.reverse = false;
 
   $http.get("/books")
     .then(function(books) {
@@ -27,39 +22,21 @@ angular.module('booksForUs', [])
 
   $scope.titleFilter = function(filterType) {
     if (filterType == 1) {
-      $scope.titleAcsend = true;
-      $scope.titleDesend = false;
+      $scope.propertyName = 'title';
+      $scope.reverse = false;
     } else {
-      $scope.titleAcsend = false;
-      $scope.titleDesend = true;
+      $scope.propertyName = 'title';
+      $scope.reverse = true;
     }
-  }
+  };
 
   $scope.scoreFilter = function(filterType) {
     if (filterType == 1) {
-      $scope.scoreAcsend = true;
-      $scope.scoreDesend = false;
+      $scope.propertyName = 'score';
+      $scope.reverse = false;
     } else {
-      $scope.scoreAcsend = false;
-      $scope.scoreDesend = true;
+      $scope.propertyName = 'score';
+      $scope.reverse = true;
     }
-  }
-
-  $scope.filterBooksBy = function() {
-    var sortingParams = [];
-
-    if ($scope.titleAcsend) {
-      sortingParams.push('title');
-    } else if ($scope.titleDesend) {
-      sortingParams.push('-title');
-    }
-
-    if ($scope.scoreAcsend) {
-      sortingParams.push('score');
-    } else if ($scope.scoreDesend) {
-      sortingParams.push('-score');
-    }
-
-    return "title";
-  }
+  };
 }]);
