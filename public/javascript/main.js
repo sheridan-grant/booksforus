@@ -56,6 +56,6 @@ angular.module('booksForUs', [])
       sortingParams.push('-title');
     }
 
-    return sortingParams;
+    return sortingParams.toString();
   }
 }]);
