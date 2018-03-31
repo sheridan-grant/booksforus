@@ -72,6 +72,18 @@
   border-radius: 5px;
 }
 
+.filters {
+  padding: 20px;
+  border: 5px solid #162D51;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.filter-icon {
+  color: #000;
+}
+
 /* Login Form */
 .login-signup-form {
   background-color: white;
