@@ -6,8 +6,8 @@ angular.module('booksForUs', [])
   $http.get("/books")
     .then(function(books) {
       console.log(books);
-      for (var i = 0; i < books.data.length; i++) {
-        var tmp = books.data[i];
+      for (var i = 0; i < books.data.data.length; i++) {
+        var tmp = books.data.data[i];
         $scope.currentBooks.push({
           title: tmp.title,
           description: tmp.description,
