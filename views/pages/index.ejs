@@ -67,16 +67,16 @@
           <div class="results">
             <div class="card" ng-repeat="book in currentBooks">
               <div class="card-body">
-                <h5 class="card-title"> book.title </h5>
-                <p class="card-text"> book.description </p>
+                <h5 class="card-title"> {{book.title}} </h5>
+                <p class="card-text"> {{book.description}} </p>
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                  book.name
+                  {{book.name}}
                 </li>
                 <li class="list-group-item">
                   Score:
-                  <span class="score"> book.score </span>
+                  <span class="score"> {{book.score}} </span>
                   <span class="score-vote glyphicon glyphicon-thumbs-up"></span>
                   <span class="score-vote glyphicon glyphicon-thumbs-down"></span>
                 </li>
