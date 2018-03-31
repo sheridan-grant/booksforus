@@ -68,18 +68,18 @@
               </div>
               <div class="form-group">
                 <span class="filter-option">Titles</span>
-                <span ng-modal="titleAcsend" ng-click="titleFilter(1)" class="filter-icon glyphicon glyphicon-arrow-up"></span>
-                <span ng-modal="titleDesend" ng-click="titleFilter(0)" class="filter-icon glyphicon glyphicon-arrow-down"></span>
+                <span ng-click="titleFilter(1)" class="filter-icon glyphicon glyphicon-arrow-up"></span>
+                <span ng-click="titleFilter(0)" class="filter-icon glyphicon glyphicon-arrow-down"></span>
               </div>
               <div class="form-group">
                 <span class="filter-option">Scores</span>
-                <span ng-modal="scoreAcsend" ng-click="scoreFilter(1)" class="filter-icon glyphicon glyphicon-arrow-up"></span>
-                <span ng-modal="scoreDesend" ng-click="scoreFilter(0)" class="filter-icon glyphicon glyphicon-arrow-down"></span>
+                <span ng-click="scoreFilter(1)" class="filter-icon glyphicon glyphicon-arrow-up"></span>
+                <span ng-click="scoreFilter(0)" class="filter-icon glyphicon glyphicon-arrow-down"></span>
               </div>
             </form>
           </div>
           <div class="results">
-            <div class="card" ng-repeat="book in currentBooks | orderBy:filterBooksBy">
+            <div class="card" ng-repeat="book in currentBooks | orderBy:filterBooksBy:filterReverse">
               <div class="card-body">
                 <h5 class="card-title"> {{book.title}} </h5>
                 <p class="card-text"> {{book.description}} </p>

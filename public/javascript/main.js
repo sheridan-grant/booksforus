@@ -56,8 +56,6 @@ angular.module('booksForUs', [])
       sortingParams.push('-score');
     }
 
-    console.log("['" + sortingParams.join("','") + "']");
-
-    return "['" + sortingParams.join("','") + "']";
+    return "title";
   }
 }]);
