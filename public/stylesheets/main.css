@@ -45,10 +45,18 @@
 
 /* Heading */
 .heading {
-  text-align: center;
   font-size: 75px;
   font-weight: bold;
-  color: #9D6D0B;
+  color: #E9AA28;
+  width: fit-content;
+  background-color: #3a619e;
+  margin: 0 auto;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 20px;
+  margin-top: 5px;
 }
 
 /* Main Content */
