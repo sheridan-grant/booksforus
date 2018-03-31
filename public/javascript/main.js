@@ -2,6 +2,10 @@ angular.module('booksForUs', [])
 
 .controller('bookViewer', [ '$scope', '$http', function($scope, $http) {
   $scope.currentBooks = [];
+
+  $scope.propertyName = 'title'; 
+  $scope.reverse = true;
+
   $scope.titleAcsend = false;
   $scope.titleDesend = false;
   $scope.scoreAcsend = false;
