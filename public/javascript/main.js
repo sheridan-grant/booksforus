@@ -51,10 +51,12 @@ angular.module('booksForUs', [])
     }
 
     if ($scope.scoreAcsend) {
-      sortingParams.push('title');
+      sortingParams.push('score');
     } else if ($scope.scoreDesend) {
-      sortingParams.push('-title');
+      sortingParams.push('-score');
     }
+
+    console.log(sortingParams.toString());
 
     return sortingParams.toString();
   }
