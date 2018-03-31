@@ -64,7 +64,7 @@
           <div class="filters">
             <form class="form-inline">
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search">
+                <input ng-model="search" type="text" class="form-control" placeholder="Search">
               </div>
               <div class="form-group">
                 <span class="filter-option">Titles</span>
@@ -79,7 +79,7 @@
             </form>
           </div>
           <div class="results">
-            <div class="card" ng-repeat="book in currentBooks | orderBy:propertyName:reverse">
+            <div class="card" ng-repeat="book in currentBooks | filter:search | orderBy:propertyName:reverse">
               <div class="card-body">
                 <h5 class="card-title"> {{book.title}} </h5>
                 <p class="card-text"> {{book.description}} </p>
