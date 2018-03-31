@@ -4,7 +4,8 @@ angular.module('booksForUs', [])
   $scope.currentBooks = [];
 
   $http.get("/books")
-    .success(function(books) {
+    .then(function(books) {
+      console.log(books);
       for (var i = 0; i < books.data.length; i++) {
         var tmp = books.data[i];
         $scope.currentBooks.push({
@@ -14,8 +15,5 @@ angular.module('booksForUs', [])
           score: tmp.score
         });
       }
-    })
-    .error(function() {
-      console.log('error getting all books');
     });
 }]);
