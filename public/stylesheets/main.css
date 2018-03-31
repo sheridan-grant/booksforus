@@ -80,8 +80,15 @@
   border-radius: 5px;
 }
 
+.filter-option {
+  color: #d9a333;
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 30px;
+}
+
 .filter-icon {
-  color: #000;
+  color: #3a619e;
 }
 
 /* Login Form */
