@@ -36,7 +36,7 @@
           <button class="side-bar-btn" data-target="#add-book-collapse" data-toggle="collapse" aria-expanded="false">
             <h2>Add Book</h2>
           </button>
-          <form ng-controller="addingBooks" class="add-book-form collapse list-unstyled" id="add-book-collapse" action="" method="post">
+          <form ng-controller="addingBooks" class="add-book-form collapse list-unstyled" id="add-book-collapse" ng-submit="addingBooks">
             <div class="form-group">
               <label for="title">Title</label>
               <input ng-model="newName" type="text" class="form-control" id="title" placeholder="Title">
