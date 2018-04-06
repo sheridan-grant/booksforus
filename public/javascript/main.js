@@ -101,7 +101,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
       $http({
         url: "/addBook",
         method: "POST",
-        params: {
+        data: {
           author: author_id,
           title: $scope.newTitle,
           desc: $scope.newDescription
