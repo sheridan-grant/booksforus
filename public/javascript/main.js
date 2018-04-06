@@ -2,19 +2,17 @@ angular.module('booksForUs', ['ui.bootstrap'])
 .factory('bookFactory', ['$http', function($http) {
   var bookFactory = {};
 
-  bookFactory.currentBooks = [];
-  bookFactory.currentAuthors = [];
-
   bookFactory.addBook = function(book) {
 
   };
 
   bookFactory.getBooks = function() {
+    var currentBooks = [];
     $http.get("/books")
       .then(function(books) {
         for (var i = 0; i < books.data.data.length; i++) {
           var tmp = books.data.data[i];
-          this.currentBooks.push({
+          currentBooks.push({
             book_id: tmp.book_id,
             title: tmp.title,
             description: tmp.description,
@@ -23,19 +21,24 @@ angular.module('booksForUs', ['ui.bootstrap'])
             score: tmp.score
           });
         }
+
+        return currentBooks;
       });
   };
 
   bookFactory.getAuthors = function() {
+    var currentAuthors = [];
     $http.get("/authors")
       .then(function(authors) {
         for (var i = 0; i < authors.data.data.length; i++) {
           var tmp = authors.data.data[i];
-          this.currentAuthors.push({
+          currentAuthors.push({
             author_id: tmp.author_id,
             name: tmp.name
           });
         }
+
+        return currentAuthors;
       });
   };
 
