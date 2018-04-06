@@ -61,7 +61,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
   $http.get("/authors")
     .then(function(authors) {
-      console.log(authors);
       for (var i = 0; i < authors.data.data.length; i++) {
         var tmp = authors.data.data[i];
         $scope.currentAuthors.push({
@@ -73,7 +72,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
   $http.get("/books")
     .then(function(books) {
-      console.log(books);
       for (var i = 0; i < books.data.data.length; i++) {
         var tmp = books.data.data[i];
         $scope.currentBooks.push({
@@ -88,7 +86,26 @@ angular.module('booksForUs', ['ui.bootstrap'])
     });
 
   $scope.addBook = function() {
-    console.log($scope.newName + ' - ' + $scope.newAuthor + ' - ' + $scope.newDescription);
+    var author_id = null;
+
+    for (var i = 0; i < $scope.currentAuthors.length; i++) {
+      if ($scope.currentAuthors[i].name = $scope.newAuthor) {
+        author_id = $scope.currentAuthors[i].author_id;
+        break;
+      }
+    }
+
+    if (author_id != null) {
+      $http({
+        url: "/addBook",
+        method: "POST",
+        params: {
+          author: author_id,
+          title: $scope.newTitle,
+          desc: $scope.newDescription
+        }
+      });
+    }
   };
 
   $scope.modelOptions = {

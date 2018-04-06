@@ -27,7 +27,16 @@ express()
   		}
   	});
   })
-  .get('/addBook', function(req, res) {
+  .post('/addBook', function(req, res) {
+    addBook(req, function(error, result) {
+      if (error || result == null) {
+  			res.status(500).json({success: false, data: error});
+  		} else {
+  			res.status(200).json({success: true});
+  		}
+    })
+  })
+  .put('/addBook', function(req, res) {
     addBook(req, function(error, result) {
       if (error || result == null) {
   			res.status(500).json({success: false, data: error});
@@ -84,23 +93,23 @@ function addBook(req, callback) {
       callback(err, null);
     }
 
-    var sql = "INSERT INTO book (title, description, score, author_id) values ($1, $2, 0, 1);";
-    var params = [req.body.title, req.body.description];
+    var sql = "INSERT INTO book (title, description, score, author_id) values ($1, $2, 0, $3);";
+    var params = [req.body.title, req.body.description, req.body.author];
 
-    // client.query(sql, params, function(err, result) {
-    //
-    //   client.end(function(err) {
-    //     if (err) throw err;
-    //   });
-    //
-    //   if (err) {
-    //     console.log("Error in query: ")
-    //     console.log(err);
-    //     callback(err, null);
-    //   }
-    //
-    //   callback(null, result.rows);
-    // });
+    client.query(sql, params, function(err, result) {
+
+      client.end(function(err) {
+        if (err) throw err;
+      });
+
+      if (err) {
+        console.log("Error in query: ")
+        console.log(err);
+        callback(err, null);
+      }
+
+      callback(null, result.rows);
+    });
   });
 }
 
@@ -109,7 +118,7 @@ function getBooks(callback) {
     connectionString: process.env.DATABASE_URL,
     ssl: true
   });
-  
+
   client.connect(function(err) {
     if (err) {
       console.log("Error connecting to DB: ")
