@@ -15,11 +15,11 @@ express()
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/authors', function(req, res) {
-    getAuthors(function(req, res) {
+    getAuthors(function(error, result) {
       if (error || result == null) {
   			res.status(500).json({success: false, data: error});
   		} else {
-  			res.status(200).json({ 'data' : result });
+  			res.status(200).json({'data' : result});
   		}
     });
   })
@@ -28,16 +28,16 @@ express()
   		if (error || result == null) {
   			res.status(500).json({success: false, data: error});
   		} else {
-  			res.status(200).json({ 'data' : result });
+  			res.status(200).json({'data' : result});
   		}
   	});
   })
   .get('/addBook', function(req, res) {
     addBook(req, function(error, result) {
       if (error || result == null) {
-  			res.status(500).json({ success: false, data: error });
+  			res.status(500).json({success: false, data: error});
   		} else {
-  			res.status(200).json({ success: true });
+  			res.status(200).json({success: true});
   		}
     })
   })
