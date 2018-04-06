@@ -1,15 +1,15 @@
 angular.module('booksForUs', ['ui.bootstrap'])
 .factory('bookFactory', ['$http', function($http) {
-  var sharedService = {};
+  var bookFactory = {};
 
-  sharedService.currentBooks = [];
-  sharedService.currentAuthors = [];
+  bookFactory.currentBooks = [];
+  bookFactory.currentAuthors = [];
 
-  sharedService.addBook = function(book) {
+  bookFactory.addBook = function(book) {
 
   };
 
-  sharedService.getBooks = function() {
+  bookFactory.getBooks = function() {
     $http.get("/books")
       .then(function(books) {
         for (var i = 0; i < books.data.data.length; i++) {
@@ -26,7 +26,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
       });
   };
 
-  sharedService.getAuthors = function() {
+  bookFactory.getAuthors = function() {
     $http.get("/authors")
       .then(function(authors) {
         for (var i = 0; i < authors.data.data.length; i++) {
@@ -39,7 +39,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
       });
   };
 
-  return sharedService;
+  return bookFactory;
 }])
 .controller('bookViewer', ['$scope', function($scope, bookFactory) {
   $scope.currentBooks = bookFactory.getBooks();
