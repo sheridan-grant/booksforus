@@ -27,7 +27,8 @@ express()
   		}
   	});
   })
-  .post('/addBook/author/:author/desc/:desc/title/:title', function(req, res) {
+  .post('/addBook', function(req, res) {
+    console.log('hello');
     addBook(req, function(error, result) {
       if (error || result == null) {
   			res.status(500).json({success: false, data: error});
