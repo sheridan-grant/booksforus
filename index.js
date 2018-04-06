@@ -4,11 +4,6 @@ const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 5000
 const { Client } = require('pg');
 
-var client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
-});
-
 express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
@@ -44,6 +39,11 @@ express()
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 function getAuthors(callback) {
+  var client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
+
   client.connect(function(err) {
     if (err) {
       console.log("Error connecting to DB: ")
@@ -72,6 +72,11 @@ function getAuthors(callback) {
 }
 
 function addBook(req, callback) {
+  var client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
+
   client.connect(function(err) {
     if (err) {
       console.log("Error connecting to DB: ")
@@ -100,6 +105,11 @@ function addBook(req, callback) {
 }
 
 function getBooks(callback) {
+  var client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
+  
   client.connect(function(err) {
     if (err) {
       console.log("Error connecting to DB: ")
