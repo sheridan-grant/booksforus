@@ -9,6 +9,13 @@ angular.module('booksForUs', [])
   $http.get("/authors")
     .then(function(authors) {
       console.log(authors);
+      for (var i = 0; i < authors.data.data.length; i++) {
+        var tmp = authors.data.data[i];
+        $scope.currentAuthors.push({
+          author_id: tmp.author_id,
+          name: tmp.name
+        });
+      }
     });
 
   $http.get("/books")

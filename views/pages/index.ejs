@@ -43,7 +43,7 @@
             </div>
             <div class="form-group">
               <label for="author">Author</label>
-              <input ng-model="newAuthor" type="text" class="form-control" id="author" placeholder="Author">
+              <input id="author" type="text" ng-model="newAuthor" placeholder="Author" uib-typeahead="author as author.name for author in currentAuthors | filter:{name:$viewValue}" typeahead-popup-template-url="customPopupTemplate.html" class="form-control">
             </div>
             <div class="form-group">
               <label for="description">Description</label>
