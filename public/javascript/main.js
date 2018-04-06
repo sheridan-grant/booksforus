@@ -56,6 +56,8 @@ angular.module('booksForUs', ['ui.bootstrap'])
 }])
 .controller('addingBooks', ['$scope', '$http', function($scope, $http) {
 
+  $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+
   $scope.currentBooks = [];
   $scope.currentAuthors = [];
 
