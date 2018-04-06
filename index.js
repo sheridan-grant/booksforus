@@ -6,6 +6,8 @@ const { Client } = require('pg');
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
+  .use(bodyParser.urlencoded({ extended: false }))
+  .use(bodyParser.json())
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
@@ -93,7 +95,7 @@ function addBook(req, callback) {
       console.log(err);
       callback(err, null);
     }
-    console.log(req);
+    
     var sql = "INSERT INTO book (title, description, score, author_id) values ($1, $2, 0, $3);";
     var params = [req.body.title, req.body.description, req.body.author];
 
