@@ -30,7 +30,6 @@ express()
   	});
   })
   .post('/addBook', function(req, res) {
-    console.log('hello');
     addBook(req, function(error, result) {
       if (error || result == null) {
   			res.status(500).json({success: false, data: error});
@@ -95,9 +94,9 @@ function addBook(req, callback) {
       console.log(err);
       callback(err, null);
     }
-    
+
     var sql = "INSERT INTO book (title, description, score, author_id) values ($1, $2, 0, $3);";
-    var params = [req.body.title, req.body.description, req.body.author];
+    var params = [req.body.title, req.body.desc, req.body.author];
 
     client.query(sql, params, function(err, result) {
 
