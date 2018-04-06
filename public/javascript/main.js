@@ -59,4 +59,8 @@ angular.module('booksForUs', [])
 
     console.log($scope.newName + ' - ' + $scope.newAuthor + ' - ' + $scope.newDescription);
   };
+
+  $scope.getAuthor = function(val) {
+
+  }
 }]);
