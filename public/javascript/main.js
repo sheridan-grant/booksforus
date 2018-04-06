@@ -3,7 +3,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
   var bookFactory = {};
 
   bookFactory.addBook = function(book) {
-
+    return $http.post("/addBook", book);
   };
 
   bookFactory.getBooks = function() {
@@ -17,7 +17,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
   return bookFactory;
 }])
 .controller('bookViewer', ['$scope', 'bookFactory', function($scope, bookFactory) {
-
   $scope.currentBooks = [];
   $scope.currentAuthors = [];
 
@@ -69,8 +68,32 @@ angular.module('booksForUs', ['ui.bootstrap'])
   };
 }])
 .controller('addingBooks', ['$scope', 'bookFactory', function($scope, bookFactory) {
-  $scope.currentBooks = bookFactory.getBooks();
-  $scope.currentAuthors = bookFactory.getAuthors();
+  $scope.currentBooks = [];
+  $scope.currentAuthors = [];
+
+  bookFactory.getBooks().then(function(books) {
+    for (var i = 0; i < books.data.data.length; i++) {
+      var tmp = books.data.data[i];
+      $scope.currentBooks.push({
+        book_id: tmp.book_id,
+        title: tmp.title,
+        description: tmp.description,
+        name: tmp.name,
+        author_id: tmp.author_id,
+        score: tmp.score
+      });
+    }
+  });
+
+  bookFactory.getAuthors().then(function(authors) {
+    for (var i = 0; i < authors.data.data.length; i++) {
+      var tmp = authors.data.data[i];
+      $scope.currentAuthors.push({
+        author_id: tmp.author_id,
+        name: tmp.name
+      });
+    }
+  });
 
   $scope.addBook = function() {
     var author_id = null;
@@ -90,13 +113,13 @@ angular.module('booksForUs', ['ui.bootstrap'])
         desc: $scope.newDescription
       };
 
-      $.post("/addBook", params, function(response) {
-          $scope.newTitle = "";
-          $scope.newAuthor = "";
-          $scope.newDescription = "";
+      bookFactory.getBooks(params).then(function(response) {
+        $scope.newTitle = "";
+        $scope.newAuthor = "";
+        $scope.newDescription = "";
 
-          $('#add-book-collapse.collapse').collapse();
-        });
+        $('#add-book-collapse.collapse').collapse();
+      });
     }
   };
 
