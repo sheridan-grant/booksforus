@@ -1,4 +1,4 @@
-angular.module('booksForUs', [])
+angular.module('booksForUs', ['ui.bootstrap'])
 .controller('bookViewer', ['$scope', '$http', function($scope, $http) {
   $scope.currentBooks = [];
   $scope.currentAuthors = [];
