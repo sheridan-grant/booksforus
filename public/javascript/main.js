@@ -44,7 +44,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
   return bookFactory;
 }])
-.controller('bookViewer', ['$scope', function($scope, bookFactory) {
+.controller('bookViewer', ['$scope', '$rootScope', function($scope, $rootScope, bookFactory) {
   $scope.currentBooks = bookFactory.getBooks();
   $scope.currentAuthors = bookFactory.getAuthors();
 
@@ -71,7 +71,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
     }
   };
 }])
-.controller('addingBooks', ['$scope', function($scope, bookFactory) {
+.controller('addingBooks', ['$scope', '$rootScope', function($scope, $rootScope, bookFactory) {
   $scope.currentBooks = bookFactory.getBooks();
   $scope.currentAuthors = bookFactory.getAuthors();
 
