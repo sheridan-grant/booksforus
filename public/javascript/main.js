@@ -60,6 +60,14 @@ angular.module('booksForUs', [])
     console.log($scope.newName + ' - ' + $scope.newAuthor + ' - ' + $scope.newDescription);
   };
 
+  $scope.modelOptions = {
+    debounce: {
+      default: 500,
+      blur: 250
+    },
+    getterSetter: true
+  };
+
   $scope.getAuthor = function(val) {
     var filteredAuthors = [];
 
@@ -71,4 +79,5 @@ angular.module('booksForUs', [])
 
     return filteredAuthors;
   }
+
 }]);
