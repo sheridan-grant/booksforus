@@ -104,6 +104,8 @@ angular.module('booksForUs', ['ui.bootstrap'])
           title: $scope.newTitle,
           desc: $scope.newDescription
         }
+      }).then(function(response) {
+        console.log(response);
       });
     }
   };
