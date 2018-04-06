@@ -95,7 +95,7 @@ function addBook(req, callback) {
     }
 
     var sql = "INSERT INTO book (title, description, score, author_id) values ($1, $2, 0, $3);";
-    var params = [req.params('title'), req.params('description'), req.params('author')];
+    var params = [req.body.title, req.body.description, req.body.author];
 
     client.query(sql, params, function(err, result) {
 
