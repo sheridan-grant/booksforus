@@ -96,19 +96,14 @@ angular.module('booksForUs', ['ui.bootstrap'])
     }
 
     if (author_id != null) {
-      $http({
-        url: "/addBook",
-        method: "POST",
-        data: $.param({
-          author: author_id,
-          title: $scope.newTitle,
-          desc: $scope.newDescription
-        }),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      }).then(function(response) {
-          console.log(response);
-        },
-        function(response) {
+
+      var params = {
+        author: author_id,
+        title: $scope.newTitle,
+        desc: $scope.newDescription
+      };
+
+      $.post("/addBook", params, function(response) {
           console.log(response);
         });
     }
