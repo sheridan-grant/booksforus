@@ -1,9 +1,31 @@
 angular.module('booksForUs', [])
 .controller('bookViewer', ['$scope', '$http', function($scope, $http) {
   $scope.currentBooks = [];
+  $scope.currentAuthors = [];
 
   $scope.propertyName = 'title';
   $scope.reverse = false;
+
+  $http.get("/authors")
+    .then(function(authors) {
+      console.log(authors);
+    });
+
+  $http.get("/books")
+    .then(function(books) {
+      console.log(books);
+      for (var i = 0; i < books.data.data.length; i++) {
+        var tmp = books.data.data[i];
+        $scope.currentBooks.push({
+          book_id: tmp.book_id,
+          title: tmp.title,
+          description: tmp.description,
+          name: tmp.name,
+          author_id: tmp.author_id,
+          score: tmp.score
+        });
+      }
+    });
 
   $http.get("/books")
     .then(function(books) {

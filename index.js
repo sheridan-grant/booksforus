@@ -9,11 +9,26 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
+  .get('/authors', function(req, res) {
+    getAuthors(function(req, res) {
+      if (error || result == null) {
+  			res.status(500).json({success: false, data: error});
+  		} else {
+  			res.status(200).json({ 'data' : result });
+  		}
+    });
+  })
   .get('/books', function(req, res) {
-    bookRoute(req, res);
+    getBooks(function(error, result) {
+  		if (error || result == null) {
+  			res.status(500).json({success: false, data: error});
+  		} else {
+  			res.status(200).json({ 'data' : result });
+  		}
+  	});
   })
   .get('/addBook', function(req, res) {
-    getBook(req, function(error, result) {
+    addBook(req, function(error, result) {
       if (error || result == null) {
   			res.status(500).json({ success: false, data: error });
   		} else {
@@ -23,18 +38,40 @@ express()
   })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
-function bookRoute(req, res) {
-  getBooks(function(error, result) {
+function getAuthors(callback) {
+  var client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+  });
 
-		if (error || result == null) {
-			res.status(500).json({success: false, data: error});
-		} else {
-			res.status(200).json({ 'data' : result });
-		}
-	});
+  client.connect(function(err) {
+    if (err) {
+      console.log("Error connecting to DB: ")
+      console.log(err);
+      callback(err, null);
+    }
+
+    var sql = "SELECT a.author_id, a.name FROM Author a;";
+    var params = [];
+
+    client.query(sql, params, function(err, result) {
+
+      client.end(function(err) {
+        if (err) throw err;
+      });
+
+      if (err) {
+        console.log("Error in query: ")
+        console.log(err);
+        callback(err, null);
+      }
+
+      callback(null, result.rows);
+    });
+  });
 }
 
-function getBook(req, callback) {
+function addBook(req, callback) {
   var client = new Client({
     connectionString: process.env.DATABASE_URL,
     ssl: true,
