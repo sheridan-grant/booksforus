@@ -99,11 +99,11 @@ angular.module('booksForUs', ['ui.bootstrap'])
       $http({
         url: "/addBook",
         method: "POST",
-        params: {
+        data: $.param({
           author: author_id,
           title: $scope.newTitle,
           desc: $scope.newDescription
-        },
+        }),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(function(response) {
           console.log(response);
