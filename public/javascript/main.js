@@ -27,22 +27,6 @@ angular.module('booksForUs', [])
       }
     });
 
-  $http.get("/books")
-    .then(function(books) {
-      console.log(books);
-      for (var i = 0; i < books.data.data.length; i++) {
-        var tmp = books.data.data[i];
-        $scope.currentBooks.push({
-          book_id: tmp.book_id,
-          title: tmp.title,
-          description: tmp.description,
-          name: tmp.name,
-          author_id: tmp.author_id,
-          score: tmp.score
-        });
-      }
-    });
-
   $scope.titleFilter = function(filterType) {
     if (filterType == 1) {
       $scope.propertyName = 'title';
