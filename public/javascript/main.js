@@ -56,8 +56,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
 }])
 .controller('addingBooks', ['$scope', '$http', function($scope, $http) {
 
-  $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-
   $scope.currentBooks = [];
   $scope.currentAuthors = [];
 
@@ -105,10 +103,14 @@ angular.module('booksForUs', ['ui.bootstrap'])
           author: author_id,
           title: $scope.newTitle,
           desc: $scope.newDescription
-        }
+        },
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(function(response) {
-        console.log(response);
-      });
+          console.log(response);
+        },
+        function(response) {
+          console.log(response);
+        });
     }
   };
 
