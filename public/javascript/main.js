@@ -6,10 +6,10 @@ angular.module('booksForUs', [])
   $scope.propertyName = 'title';
   $scope.reverse = false;
 
-  $http.get("/authors")
-    .then(function(authors) {
-      console.log(authors);
-    });
+  // $http.get("/authors")
+  //   .then(function(authors) {
+  //     console.log(authors);
+  //   });
 
   $http.get("/books")
     .then(function(books) {
