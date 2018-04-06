@@ -5,7 +5,7 @@
 </head>
 
 <body>
-  <div class="wrapper">
+  <div class="wrapper" ng-controller="bookController">
 
     <div id="sidebar">
       <br>
@@ -36,7 +36,7 @@
           <button class="side-bar-btn" data-target="#add-book-collapse" data-toggle="collapse" aria-expanded="false">
             <h2>Add Book</h2>
           </button>
-          <form ng-controller="addingBooks" class="add-book-form collapse list-unstyled" id="add-book-collapse" ng-submit="addBook()">
+          <form class="add-book-form collapse list-unstyled" id="add-book-collapse" ng-submit="addBook()">
             <div class="form-group">
               <label for="title">Title</label>
               <input ng-model="newTitle" type="text" class="form-control" id="title">
@@ -60,7 +60,7 @@
         <h1 class="heading">Books for Us</h1>
       </div>
       <div class="content-body">
-        <div class="" ng-controller="bookViewer">
+        <div>
           <div class="filters">
             <form class="form-inline">
               <div class="form-group">
