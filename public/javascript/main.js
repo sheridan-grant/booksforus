@@ -118,7 +118,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
         $scope.newAuthor = "";
         $scope.newDescription = "";
 
-        $('#add-book-collapse.collapse').collapse();
+        $('.collapse').collapse();
       });
     }
   };
