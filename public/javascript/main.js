@@ -61,6 +61,14 @@ angular.module('booksForUs', [])
   };
 
   $scope.getAuthor = function(val) {
+    var filteredAuthors = [];
 
+    for (var i = 0; i < $scope.currentAuthors.length; i++) {
+      if ($scope.currentAuthors[i].name.toLowerCase().indexOf(val) != -1) {
+        filteredAuthors.push($scope.currentAuthors[i].name);
+      }
+    }
+
+    return filteredAuthors;
   }
 }]);
