@@ -7,46 +7,43 @@ angular.module('booksForUs', ['ui.bootstrap'])
   };
 
   bookFactory.getBooks = function() {
-    var currentBooks = [];
-    $http.get("/books")
-      .then(function(books) {
-        for (var i = 0; i < books.data.data.length; i++) {
-          var tmp = books.data.data[i];
-          currentBooks.push({
-            book_id: tmp.book_id,
-            title: tmp.title,
-            description: tmp.description,
-            name: tmp.name,
-            author_id: tmp.author_id,
-            score: tmp.score
-          });
-        }
-
-        return currentBooks;
-      });
+    return $http.get("/books");
   };
 
   bookFactory.getAuthors = function() {
-    var currentAuthors = [];
-    $http.get("/authors")
-      .then(function(authors) {
-        for (var i = 0; i < authors.data.data.length; i++) {
-          var tmp = authors.data.data[i];
-          currentAuthors.push({
-            author_id: tmp.author_id,
-            name: tmp.name
-          });
-        }
-
-        return currentAuthors;
-      });
+    return $http.get("/authors");
   };
 
   return bookFactory;
 }])
 .controller('bookViewer', ['$scope', 'bookFactory', function($scope, bookFactory) {
-  $scope.currentBooks = bookFactory.getBooks();
-  $scope.currentAuthors = bookFactory.getAuthors();
+
+  $scope.currentBooks = [];
+  $scope.currentAuthors = [];
+
+  bookFactory.getBooks().then(function(books) {
+    for (var i = 0; i < books.data.data.length; i++) {
+      var tmp = books.data.data[i];
+      $scope.currentBooks.push({
+        book_id: tmp.book_id,
+        title: tmp.title,
+        description: tmp.description,
+        name: tmp.name,
+        author_id: tmp.author_id,
+        score: tmp.score
+      });
+    }
+  });
+
+  bookFactory.getAuthors().then(function(authors) {
+    for (var i = 0; i < authors.data.data.length; i++) {
+      var tmp = authors.data.data[i];
+      $scope.currentAuthors.push({
+        author_id: tmp.author_id,
+        name: tmp.name
+      });
+    }
+  });
 
   $scope.propertyName = 'title';
   $scope.reverse = false;
