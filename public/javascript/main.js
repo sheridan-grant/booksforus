@@ -113,7 +113,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
         desc: $scope.newDescription
       };
 
-      bookFactory.getBooks(params).then(function(response) {
+      bookFactory.addBook(params).then(function(response) {
         $scope.newTitle = "";
         $scope.newAuthor = "";
         $scope.newDescription = "";
