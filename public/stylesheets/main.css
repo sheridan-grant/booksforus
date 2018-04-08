@@ -8,6 +8,7 @@
   height: 100vh;
   background-color: #3A619E;
   box-shadow: 1px 0px 8px;
+  position: fixed;
 }
 
 .side-bar-btn {
@@ -62,9 +63,10 @@
 /* Main Content */
 
 .content-body {
-  width: 90%;
+  width: auto;
   padding: 5px;
-  margin: 0 auto;
+  margin-left: 270px;
+  margin-right: 18px;
 }
 
 .results {
