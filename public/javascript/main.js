@@ -77,6 +77,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
     for (var i = 0; i < books.data.data.length; i++) {
       var tmp = books.data.data[i];
       $scope.currentBooks.push({
+        id: i,
         book_id: tmp.book_id,
         title: tmp.title,
         description: tmp.description,
@@ -123,6 +124,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
           for (var i = 0; i < books.data.data.length; i++) {
             var tmp = books.data.data[i];
             $scope.currentBooks.push({
+              id: i,
               book_id: tmp.book_id,
               title: tmp.title,
               description: tmp.description,

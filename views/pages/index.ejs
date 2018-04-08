@@ -91,8 +91,8 @@
                 <li class="list-group-item">
                   Score:
                   <span class="score"> {{book.score}} </span>
-                  <span class="score-vote glyphicon glyphicon-thumbs-up" ng-click="incrementScore($index)"></span>
-                  <span class="score-vote glyphicon glyphicon-thumbs-down" ng-click="decrementScore($index)"></span>
+                  <span class="score-vote glyphicon glyphicon-thumbs-up" ng-click="incrementScore(book.id)"></span>
+                  <span class="score-vote glyphicon glyphicon-thumbs-down" ng-click="decrementScore(book.id)"></span>
                 </li>
               </ul>
               <span class="glyphicon glyphicon-heart"></span>
