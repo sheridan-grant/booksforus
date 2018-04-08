@@ -67,10 +67,10 @@ express()
     });
   })
   .post('/signup', function(req, res) {
-    signupUser(req, function(error, result) {
-      res.setHeader('Content-Type', 'application/json');
-      res.send({ favorite: [] });
-    });
+    // signupUser(req, function(error, result) {
+    //   res.setHeader('Content-Type', 'application/json');
+    //   res.send({ favorite: [] });
+    // });
   })
   .post('/login', function(req, res) {
     loginUser(req, function(error, result) {
@@ -80,10 +80,10 @@ express()
     });
   })
   .post('/logout', function(req, res) {
-    if (req.session.user) {
-      req.session.destroy();
-      res.send({ success: true });
-    }
+    // if (req.session.user) {
+    //   req.session.destroy();
+    //   res.send({ success: true });
+    // }
   })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
