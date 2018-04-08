@@ -90,6 +90,8 @@
   margin-left: 250px;
   position: fixed;
   width: 100%;
+  background-color: white;
+  z-index: 9999;
 }
 
 .filter-option {
@@ -132,11 +134,12 @@
 
 /* Cards */
 .card {
-  width: 25rem;
+  width: 373px;
   border: 1px solid #b7b7b7;
   padding: 15px;
   display: inline-grid;
   margin: 15px;
+  min-height: 300px;
 }
 
 .card-title {
