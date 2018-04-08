@@ -83,8 +83,8 @@ angular.module('booksForUs', ['ui.bootstrap'])
         name: tmp.name,
         author_id: tmp.author_id,
         score: tmp.score,
-        inc = false;
-        dec = false;
+        inc: false,
+        dec: false
       });
     }
   });
@@ -128,7 +128,9 @@ angular.module('booksForUs', ['ui.bootstrap'])
               description: tmp.description,
               name: tmp.name,
               author_id: tmp.author_id,
-              score: tmp.score
+              score: tmp.score,
+              inc: false,
+              dec: false
             });
           }
 
