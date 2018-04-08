@@ -12,17 +12,18 @@
       <!-- Sidebar -->
       <ul id="sidebar-list" class="list-unstyled components">
         <li>
-          <form class="login-signup-form" action="index.html" method="post">
+          <form class="login-signup-form">
             <div class="form-group">
               <label for="username">Username</label>
-              <input type="text" class="form-control" id="username" placeholder="Username">
+              <input type="text" class="form-control" ng-model="username" placeholder="Username">
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="Password">
+              <input type="password" class="form-control" ng-model="password" placeholder="Password">
             </div>
-            <input class="login-button" type="submit" name="" value="Login">
-            <input class="signup-button" type="submit" name="" value="Signup">
+            <input ng-if="!isLoggedin" class="login-button" type="button" ng-click="login()" value="Login">
+            <input ng-if="isLoggedin" class="login-button" type="button" ng-click="logout()" value="Logout">
+            <input ng-if="!isLoggedin" class="signup-button" type="button" ng-click="signup()" value="Signup">
           </form>
         </li>
         <br>
@@ -93,6 +94,11 @@
                   <span class="score-vote glyphicon glyphicon-thumbs-down" ng-click="decrementScore(book.id)"></span>
                 </li>
               </ul>
+
+              <div class="comments">
+                <div class="comment">
+                </div>
+              </div>
             </div>
           </div>
       </div>

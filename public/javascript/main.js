@@ -3,6 +3,18 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
   var bookFactory = {};
 
+  bookFactory.signup = function(user) {
+    return $http.post("/signup", user);
+  };
+
+  bookFactory.login = function(user) {
+    return $http.post("/login", user);
+  };
+
+  bookFactory.logout = function() {
+    return $http.post("/logout");
+  };
+
   bookFactory.addBook = function(book) {
     return $http.post("/addBook", book);
   };
@@ -25,7 +37,42 @@ angular.module('booksForUs', ['ui.bootstrap'])
   $scope.currentBooks = [];
   $scope.currentAuthors = [];
   $scope.propertyName = 'title';
+  $scope.username = "";
+  $scope.password = "";
+  $scope.isLoggedIn = false;
   $scope.reverse = false;
+
+  $scope.signup = function() {
+    var user = {
+      username: $scope.username,
+      password: $scope.password
+    };
+
+    if (user.username != "" && user.password != "") {
+      bookFactory.signup(user).then(function(response) {
+        $scope.isLoggedin = true;
+      });
+    }
+  };
+
+  $scope.login = function() {
+    var user = {
+      username: $scope.username,
+      password: $scope.password
+    };
+
+    if (user.username != "" && user.password != "") {
+      bookFactory.login(user).then(function(response) {
+        $scope.isLoggedin = true;
+      });
+    }
+  };
+
+  $scope.logout = function() {
+    bookFactory.logout().then(function(response) {
+      $scope.isLoggedin = false;
+    });
+  };
 
   $scope.titleFilter = function(filterType) {
     if (filterType == 1) {

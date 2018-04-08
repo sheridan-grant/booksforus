@@ -4,13 +4,32 @@ const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 5000
 const { Client } = require('pg');
 
+var session = require('express-session');
+var FileStore = require('session-file-store')(session);
+
 express()
   .use(express.static(path.join(__dirname, 'public')))
   .use(bodyParser.urlencoded({ extended: false }))
   .use(bodyParser.json())
+  .use(session({
+    name: 'server-session-cookie-id',
+    secret: 'pastaforyou',
+    saveUninitialized: true,
+    resave: true,
+    store: new FileStore(),
+    cookie: { maxAge: 3600000,secure: false, httpOnly: true }
+  }))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
+  .get('/currentSession', function(req, res) {
+    var s = req.session;
+    if (s.favorite != null) {
+      res.status(200).json({favorite: s.favorite});
+    } else {
+      res.status(200).json({favorite: null});
+    }
+  })
   .get('/authors', function(req, res) {
     getAuthors(function(error, result) {
       if (error || result == null) {
@@ -47,7 +66,63 @@ express()
   		}
     });
   })
+  .post('/signup', function(req, res) {
+    signupUser(req, function(error, result) {
+      res.setHeader('Content-Type', 'application/json');
+      res.send({ favorite: [] });
+    });
+  })
+  .post('/login', function(req, res) {
+    loginUser(req, function(error, result) {
+      console.log(result);
+      res.setHeader('Content-Type', 'application/json');
+      res.send({ favorite: null });
+    });
+  })
+  .post('/logout', function(req, res) {
+    if (req.session.user) {
+      req.session.destroy();
+      res.send({ success: true });
+    }
+  })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
+function loginUser(req, callback) {
+  var client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
+
+  client.connect(function(err) {
+    if (err) {
+      console.log("Error connecting to DB: ")
+      console.log(err);
+      callback(err, null);
+    }
+
+    var sql = "SELECT * FROM USERS WHERE username = $1 AND password = $2;";
+    var params = [req.body.username, req.body.password];
+
+    client.query(sql, params, function(err, result) {
+
+      client.end(function(err) {
+        if (err) throw err;
+      });
+
+      if (err) {
+        console.log("Error in query: ")
+        console.log(err);
+        callback(err, null);
+      }
+
+      callback(null, result.rows);
+    });
+  });
+}
+
+function signupUser(req, callback) {
+
+}
 
 function changeScore(req, callback) {
   var client = new Client({
