@@ -16,7 +16,9 @@
     "pg": "^7.4.1"
   },
   "devDependencies": {
+    "express-session": "^1.15.6",
     "request": "^2.81.0",
+    "session-file-store": "^1.2.0",
     "tape": "^4.7.0"
   },
   "repository": {
