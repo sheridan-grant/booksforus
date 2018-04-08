@@ -53,9 +53,11 @@ angular.module('booksForUs', ['ui.bootstrap'])
     if (!$scope.inc) {
       $scope.currentBooks[idx].score++;
       $scope.inc = !$scope.inc;
+      $scope.dec = false;
     } else if ($scope.dec && !$scope.inc) {
-      $scope.currentBooks[idx].score++;
-      $scope.inc = !$scope.inc;
+      $scope.currentBooks[idx].score = 0;
+      $scope.inc = false;
+      $scope.dec = false;
     }
   }
 
@@ -63,9 +65,11 @@ angular.module('booksForUs', ['ui.bootstrap'])
     if (!$scope.dec) {
       $scope.currentBooks[idx].score--;
       $scope.dec = !$scope.dec;
+      $scope.inc = false;
     } else if ($scope.inc && !$scope.dec) {
-      $scope.currentBooks[idx].score--;
-      $scope.dec = !$scope.dec;
+      $scope.currentBooks[idx].score = 0;
+      $scope.inc = false;
+      $scope.dec = false;
     }
   }
 
