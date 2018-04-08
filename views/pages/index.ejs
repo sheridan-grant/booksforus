@@ -78,8 +78,8 @@
           <div class="results">
             <div class="card" ng-repeat="book in currentBooks | filter:search | orderBy:propertyName:reverse">
               <div class="card-body">
+                <span class="heart glyphicon glyphicon-heart"></span>
                 <h5 class="card-title"> {{book.title}} </h5>
-                <span class="glyphicon glyphicon-heart"></span>
                 <p class="card-text"> {{book.description}} </p>
               </div>
               <ul class="list-group list-group-flush">
