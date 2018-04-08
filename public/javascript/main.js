@@ -48,9 +48,10 @@ angular.module('booksForUs', ['ui.bootstrap'])
   };
 
   $scope.incrementScore = function(idx) {
-    if (!$scope.currentBooks[idx].inc) {
+    if (!$scope.currentBooks[idx].inc &&
+        $scope.currentBooks[idx].score == 0) {
       $scope.currentBooks[idx].score++;
-      $scope.currentBooks[idx].inc = !$scope.currentBooks[idx].inc;
+      $scope.currentBooks[idx].inc = true;
       $scope.currentBooks[idx].dec = false;
     } else if ($scope.currentBooks[idx].dec &&
               !$scope.currentBooks[idx].inc) {
@@ -61,9 +62,10 @@ angular.module('booksForUs', ['ui.bootstrap'])
   }
 
   $scope.decrementScore = function(idx) {
-    if (!$scope.currentBooks[idx].dec) {
+    if (!$scope.currentBooks[idx].dec &&
+        $scope.currentBooks[idx].score == 0) {
       $scope.currentBooks[idx].score--;
-      $scope.currentBooks[idx].dec = !$scope.dec;
+      $scope.currentBooks[idx].dec = true;
       $scope.currentBooks[idx].inc = false;
     } else if ($scope.currentBooks[idx].inc &&
               !$scope.currentBooks[idx].dec) {
