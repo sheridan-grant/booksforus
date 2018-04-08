@@ -15,11 +15,59 @@ angular.module('booksForUs', ['ui.bootstrap'])
     return $http.get("/authors");
   };
 
+  bookFactory.changeScore = function(score) {
+    return $http.put("/changeScore", score);
+  }
+
   return bookFactory;
 }])
 .controller('bookController', ['$scope', 'bookFactory', function($scope, bookFactory) {
   $scope.currentBooks = [];
   $scope.currentAuthors = [];
+  $scope.propertyName = 'title';
+  $scope.inc = false;
+  $scope.dec = false;
+  $scope.reverse = false;
+
+  $scope.titleFilter = function(filterType) {
+    if (filterType == 1) {
+      $scope.propertyName = 'title';
+      $scope.reverse = false;
+    } else {
+      $scope.propertyName = 'title';
+      $scope.reverse = true;
+    }
+  };
+
+  $scope.scoreFilter = function(filterType) {
+    if (filterType == 1) {
+      $scope.propertyName = 'score';
+      $scope.reverse = false;
+    } else {
+      $scope.propertyName = 'score';
+      $scope.reverse = true;
+    }
+  };
+
+  $scope.incrementScore = function(idx) {
+    if (!$scope.inc) {
+      $scope.currentBooks[idx].score++;
+      $scope.inc = !$scope.inc;
+    } else if ($scope.dec && !$scope.inc) {
+      $scope.currentBooks[idx].score++;
+      $scope.inc = !$scope.inc;
+    }
+  }
+
+  $scope.decrementScore = function(idx) {
+    if (!$scope.dec) {
+      $scope.currentBooks[idx].score--;
+      $scope.dec = !$scope.dec;
+    } else if ($scope.inc && !$scope.dec) {
+      $scope.currentBooks[idx].score--;
+      $scope.dec = !$scope.dec;
+    }
+  }
 
   bookFactory.getBooks().then(function(books) {
     for (var i = 0; i < books.data.data.length; i++) {
@@ -44,29 +92,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
       });
     }
   });
-
-  $scope.propertyName = 'title';
-  $scope.reverse = false;
-
-  $scope.titleFilter = function(filterType) {
-    if (filterType == 1) {
-      $scope.propertyName = 'title';
-      $scope.reverse = false;
-    } else {
-      $scope.propertyName = 'title';
-      $scope.reverse = true;
-    }
-  };
-
-  $scope.scoreFilter = function(filterType) {
-    if (filterType == 1) {
-      $scope.propertyName = 'score';
-      $scope.reverse = false;
-    } else {
-      $scope.propertyName = 'score';
-      $scope.reverse = true;
-    }
-  };
 
   $scope.addBook = function() {
     var author_id = null;

@@ -38,16 +38,49 @@ express()
   		}
     })
   })
-  .put('/addBook', function(req, res) {
-    addBook(req, function(error, result) {
+  .put('/changeScore', function(req, res) {
+    changeScore(req, function(error, result) {
       if (error || result == null) {
   			res.status(500).json({success: false, data: error});
   		} else {
   			res.status(200).json({success: true});
   		}
-    })
+    });
   })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
+function changeScore(req, callback) {
+  var client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
+
+  client.connect(function(err) {
+    if (err) {
+      console.log("Error connecting to DB: ")
+      console.log(err);
+      callback(err, null);
+    }
+
+    var sql = "UPDATE book SET score = $1 WHERE book_id = $2;";
+    var params = [req.body.score, req.body.book_id];
+
+    client.query(sql, params, function(err, result) {
+
+      client.end(function(err) {
+        if (err) throw err;
+      });
+
+      if (err) {
+        console.log("Error in query: ")
+        console.log(err);
+        callback(err, null);
+      }
+
+      callback(null, result.rows);
+    });
+  });
+}
 
 function getAuthors(callback) {
   var client = new Client({
