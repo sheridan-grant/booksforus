@@ -25,8 +25,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
   $scope.currentBooks = [];
   $scope.currentAuthors = [];
   $scope.propertyName = 'title';
-  $scope.inc = false;
-  $scope.dec = false;
   $scope.reverse = false;
 
   $scope.titleFilter = function(filterType) {
@@ -50,26 +48,28 @@ angular.module('booksForUs', ['ui.bootstrap'])
   };
 
   $scope.incrementScore = function(idx) {
-    if (!$scope.inc) {
+    if (!$scope.currentBooks[idx].inc) {
       $scope.currentBooks[idx].score++;
-      $scope.inc = !$scope.inc;
-      $scope.dec = false;
-    } else if ($scope.dec && !$scope.inc) {
+      $scope.currentBooks[idx].inc = !$scope.currentBooks[idx].inc;
+      $scope.currentBooks[idx].dec = false;
+    } else if ($scope.currentBooks[idx].dec &&
+              !$scope.currentBooks[idx].inc) {
       $scope.currentBooks[idx].score = 0;
-      $scope.inc = false;
-      $scope.dec = false;
+      $scope.currentBooks[idx].inc = false;
+      $scope.currentBooks[idx].dec = false;
     }
   }
 
   $scope.decrementScore = function(idx) {
-    if (!$scope.dec) {
+    if (!$scope.currentBooks[idx].dec) {
       $scope.currentBooks[idx].score--;
-      $scope.dec = !$scope.dec;
-      $scope.inc = false;
-    } else if ($scope.inc && !$scope.dec) {
+      $scope.currentBooks[idx].dec = !$scope.dec;
+      $scope.currentBooks[idx].inc = false;
+    } else if ($scope.currentBooks[idx].inc &&
+              !$scope.currentBooks[idx].dec) {
       $scope.currentBooks[idx].score = 0;
-      $scope.inc = false;
-      $scope.dec = false;
+      $scope.currentBooks[idx].inc = false;
+      $scope.currentBooks[idx].dec = false;
     }
   }
 
@@ -82,7 +82,9 @@ angular.module('booksForUs', ['ui.bootstrap'])
         description: tmp.description,
         name: tmp.name,
         author_id: tmp.author_id,
-        score: tmp.score
+        score: tmp.score,
+        inc = false;
+        dec = false;
       });
     }
   });
