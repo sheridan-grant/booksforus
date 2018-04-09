@@ -100,11 +100,23 @@ angular.module('booksForUs', ['ui.bootstrap'])
       $scope.currentBooks[idx].score++;
       $scope.currentBooks[idx].inc = true;
       $scope.currentBooks[idx].dec = false;
+      bookFactory.changeScore({
+          score: $scope.currentBooks[idx].score,
+          book_id: $scope.currentBooks[idx].book_id
+        }).then(function(response) {
+          console.log(response);
+        });
     } else if ($scope.currentBooks[idx].dec &&
               !$scope.currentBooks[idx].inc) {
       $scope.currentBooks[idx].score = 0;
       $scope.currentBooks[idx].inc = false;
       $scope.currentBooks[idx].dec = false;
+      bookFactory.changeScore({
+          score: $scope.currentBooks[idx].score,
+          book_id: $scope.currentBooks[idx].book_id
+        }).then(function(response) {
+          console.log(response);
+        });
     }
   }
 
@@ -114,11 +126,23 @@ angular.module('booksForUs', ['ui.bootstrap'])
       $scope.currentBooks[idx].score--;
       $scope.currentBooks[idx].dec = true;
       $scope.currentBooks[idx].inc = false;
+      bookFactory.changeScore({
+          score: $scope.currentBooks[idx].score,
+          book_id: $scope.currentBooks[idx].book_id
+        }).then(function(response) {
+          console.log(response);
+        });
     } else if ($scope.currentBooks[idx].inc &&
               !$scope.currentBooks[idx].dec) {
       $scope.currentBooks[idx].score = 0;
       $scope.currentBooks[idx].inc = false;
       $scope.currentBooks[idx].dec = false;
+      bookFactory.changeScore({
+          score: $scope.currentBooks[idx].score,
+          book_id: $scope.currentBooks[idx].book_id
+        }).then(function(response) {
+          console.log(response);
+        });
     }
   }
 
