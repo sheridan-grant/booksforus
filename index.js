@@ -75,8 +75,11 @@ express()
   .post('/login', function(req, res) {
     loginUser(req, function(error, result) {
       console.log(result);
-      res.setHeader('Content-Type', 'application/json');
-      res.send({ favorite: null });
+      if (result.length != 0) {
+
+      } else {
+
+      }
     });
   })
   .post('/logout', function(req, res) {
