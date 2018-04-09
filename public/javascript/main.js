@@ -103,8 +103,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
       bookFactory.changeScore({
           score: $scope.currentBooks[idx].score,
           book_id: $scope.currentBooks[idx].book_id
-        }).then(function(response) {
-          console.log(response);
         });
     } else if ($scope.currentBooks[idx].dec &&
               !$scope.currentBooks[idx].inc) {
@@ -114,11 +112,9 @@ angular.module('booksForUs', ['ui.bootstrap'])
       bookFactory.changeScore({
           score: $scope.currentBooks[idx].score,
           book_id: $scope.currentBooks[idx].book_id
-        }).then(function(response) {
-          console.log(response);
         });
     }
-  }
+  };
 
   $scope.decrementScore = function(idx) {
     if (!$scope.currentBooks[idx].dec &&
@@ -129,8 +125,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
       bookFactory.changeScore({
           score: $scope.currentBooks[idx].score,
           book_id: $scope.currentBooks[idx].book_id
-        }).then(function(response) {
-          console.log(response);
         });
     } else if ($scope.currentBooks[idx].inc &&
               !$scope.currentBooks[idx].dec) {
@@ -140,11 +134,9 @@ angular.module('booksForUs', ['ui.bootstrap'])
       bookFactory.changeScore({
           score: $scope.currentBooks[idx].score,
           book_id: $scope.currentBooks[idx].book_id
-        }).then(function(response) {
-          console.log(response);
         });
     }
-  }
+  };
 
   bookFactory.getBooks().then(function(books) {
     for (var i = 0; i < books.data.data.length; i++) {
@@ -187,6 +179,38 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
       var params = {
         author: author_id,
+        title: $scope.newTitle,
+        desc: $scope.newDescription
+      };
+
+      bookFactory.addBook(params).then(function(response) {
+        bookFactory.getBooks().then(function(books) {
+          $scope.currentBooks = [];
+          for (var i = 0; i < books.data.data.length; i++) {
+            var tmp = books.data.data[i];
+            $scope.currentBooks.push({
+              id: i,
+              book_id: tmp.book_id,
+              title: tmp.title,
+              description: tmp.description,
+              name: tmp.name,
+              author_id: tmp.author_id,
+              score: tmp.score,
+              inc: false,
+              dec: false
+            });
+          }
+
+          $scope.newTitle = "";
+          $scope.newAuthor = "";
+          $scope.newDescription = "";
+
+          $('form.collapse').slideUp();
+        });
+      });
+    } else {
+      var params = {
+        author: $scope.newAuthor,
         title: $scope.newTitle,
         desc: $scope.newDescription
       };

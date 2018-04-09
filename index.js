@@ -55,6 +55,22 @@ express()
   		} else {
   			res.status(200).json({success: true});
   		}
+    });
+  })
+  .post('/addAuthor', function(req, res) {
+    addAuthor(req, function(error, result) {
+      if (error || result == null) {
+  			res.status(500).json({success: false, data: error});
+  		} else {
+        req.body.author = result.data.author_id;
+  			addBook(req, function(error, bookResult) {
+          if (error || bookResult == null) {
+      			res.status(500).json({success: false, data: error});
+      		} else {
+      			res.status(200).json({success: true});
+      		}
+        });
+  		}
     })
   })
   .put('/changeScore', function(req, res) {
@@ -222,6 +238,57 @@ function addBook(req, callback) {
       }
 
       callback(null, result.rows);
+    });
+  });
+}
+
+function addAuthor(callback) {
+  var client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
+
+  // Add an author
+  client.connect(function(err) {
+    if (err) {
+      console.log("Error connecting to DB: ")
+      console.log(err);
+      callback(err, null);
+    }
+
+    var sql = "INSERT INTO author a WHERE a.name = $1;";
+    var params = [req.body.author];
+
+    client.query(sql, params, function(err, r) {
+
+      client.end(function(err) {
+        if (err) throw err;
+      });
+
+      if (err) {
+        console.log("Error in query: ")
+        console.log(err);
+        callback(err, null);
+      }
+
+      // get the newest author
+      var sql = "SELECT author_id FROM author Where name) values ($1);";
+      var params = [req.body.author];
+
+      client.query(sql, params, function(err, result) {
+
+        client.end(function(err) {
+          if (err) throw err;
+        });
+
+        if (err) {
+          console.log("Error in query: ")
+          console.log(err);
+          callback(err, null);
+        }
+
+        callback(null, result.rows);
+      });
     });
   });
 }
