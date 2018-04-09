@@ -215,7 +215,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
         desc: $scope.newDescription
       };
 
-      bookFactory.addBook(params).then(function(response) {
+      bookFactory.addAuthor(params).then(function(response) {
         bookFactory.getBooks().then(function(books) {
           $scope.currentBooks = [];
           for (var i = 0; i < books.data.data.length; i++) {
