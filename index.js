@@ -258,7 +258,7 @@ function addAuthor(req, callback) {
       callback(err, null);
     }
 
-    var sql = "INSERT INTO author a WHERE a.name = $1;";
+    var sql = "INSERT INTO author (name) VALUES ($1);";
     var params = [req.body.author];
 
     client.query(sql, params, function(err, r) {
@@ -274,8 +274,8 @@ function addAuthor(req, callback) {
       }
 
       // get the newest author
-      var sql = "SELECT author_id FROM author Where name) values ($1);";
-      var params = [req.body.author];
+      sql = "SELECT author_id FROM author a Where a.name = $1;";
+      params = [req.body.author];
 
       client.query(sql, params, function(err, result) {
 
