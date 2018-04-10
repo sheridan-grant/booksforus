@@ -264,7 +264,7 @@ function addAuthor(req, callback) {
     var sql = "INSERT INTO author (name) VALUES ($1);";
     var params = [req.body.author];
 
-    client.query(sql, params, function(err, r) {
+    client.query(sql, params, function(err, result) {
 
       client.end(function(err) {
         if (err) throw err;
@@ -275,6 +275,8 @@ function addAuthor(req, callback) {
         console.log(err);
         callback(err, null);
       }
+
+      callback(err, result);
     });
   });
 }
@@ -292,7 +294,7 @@ function getAuthorId(req, callback) {
       callback(err, null);
     }
 
-    var sql = "SELECT author_id FROM author a Where a.name = $1;";
+    var sql = "SELECT author_id FROM author a WHERE a.name = $1;";
     var params = [req.body.author];
 
     client.query(sql, params, function(err, result) {
@@ -306,7 +308,9 @@ function getAuthorId(req, callback) {
         console.log(err);
         callback(err, null);
       }
+
       console.log(result);
+
       callback(null, result.rows);
     });
   });
