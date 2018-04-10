@@ -25,7 +25,7 @@ express()
   .get('/currentSession', function(req, res) {
     var s = req.session;
     if (s.user != null) {
-      res.status(200).json({user: s.user.username});
+      res.status(200).json({user: s.user});
     } else {
       res.status(200).json({user: null});
     }
