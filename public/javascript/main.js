@@ -59,6 +59,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
   $scope.currentAuthors = [];
   $scope.propertyName = 'title';
   $scope.view = "Favorite Books";
+  $scope.viewAllBooks = true;
   $scope.username = "";
   $scope.password = "";
   $scope.reverse = false;
@@ -94,16 +95,10 @@ angular.module('booksForUs', ['ui.bootstrap'])
   $scope.changeView = function() {
     if ($scope.view == "Favorite Books") {
       $scope.view = "All Books";
+      $scope.viewAllBooks = false;
     } else {
       $scope.view = "Favorite Books";
-    }
-  }
-
-  $scope.allOrFavs = function() {
-    if ($scope.view == "All Books") {
-      return "{book_id:currentFavorites}";
-    } else {
-      return "{book_id:currentBooks}";
+      $scope.viewAllBooks = true;
     }
   }
 

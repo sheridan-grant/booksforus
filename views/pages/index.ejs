@@ -76,8 +76,34 @@
         </form>
       </div>
       <div class="content-body">
-          <div class="results">
-            <div class="card" ng-repeat="book in currentBooks | filter:allOrFavs | filter:search | orderBy:propertyName:reverse">
+          <div class="results" ng-if="viewAllBooks">
+            <div class="card" ng-repeat="book in currentBooks | filter:search | orderBy:propertyName:reverse">
+              <div class="card-body">
+                <span ng-if="isLoggedin" id="h{{book.book_id}}" ng-class="book.favorite ? 'red-heart' : 'black-heart'" class="heart glyphicon glyphicon-heart" ng-click="toggleFavorite(book.book_id)"></span>
+                <h5 class="card-title"> {{book.title}} </h5>
+                <p class="card-text"> {{book.description}} </p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  {{book.name}}
+                </li>
+                <li class="list-group-item">
+                  Score:
+                  <span class="score"> {{book.score}} </span>
+                  <span class="score-vote glyphicon glyphicon-thumbs-up" ng-click="incrementScore(book.id)"></span>
+                  <span class="score-vote glyphicon glyphicon-thumbs-down" ng-click="decrementScore(book.id)"></span>
+                </li>
+              </ul>
+
+              <div class="comments">
+                <div class="comment">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="results" ng-if="!viewAllBooks">
+            <div class="card" ng-repeat="book in currentBooks | filter:{book_id:currentFavorites} | filter:search | orderBy:propertyName:reverse">
               <div class="card-body">
                 <span ng-if="isLoggedin" id="h{{book.book_id}}" ng-class="book.favorite ? 'red-heart' : 'black-heart'" class="heart glyphicon glyphicon-heart" ng-click="toggleFavorite(book.book_id)"></span>
                 <h5 class="card-title"> {{book.title}} </h5>
