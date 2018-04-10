@@ -92,7 +92,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
           $scope.password = "";
           $scope.isLoggedin = true;
           bookFactory.getFavorites().then(function(response) {
-            console.log(response);
+            console.log('favs - ', response);
           });
         }
       });
@@ -110,22 +110,32 @@ angular.module('booksForUs', ['ui.bootstrap'])
       book_id: book_id
     };
 
-    var idx = null;
+    var fav = false;
 
     for (var i = 0; i < $scope.currentFavorites.length; i++) {
       if ($scope.currentFavorites[i].book_id == book_id) {
-        idx = i;
+        fav = true;
         break;
       }
     }
 
-    if (idx == null) {
-      $scope.currentFavorites[idx].favorite = true;
+    if (!fav) {
+      for (var i = 0; i < $scope.currentBooks.length; i++) {
+        if ($scope.currentBooks[i].book_id == book_id) {
+          $scope.currentBooks[i].favorite = true;
+        }
+      }
+
       bookFactory.addFavorite(params).then(function(response) {
         console.log('add - ', response);
       });
     } else {
-      $scope.currentFavorites[idx].favorite = false;
+      for (var i = 0; i < $scope.currentBooks.length; i++) {
+        if ($scope.currentBooks[i].book_id == book_id) {
+          $scope.currentBooks[i].favorite = false;
+        }
+      }
+      
       bookFactory.removeFavorite(params).then(function(response) {
         console.log('remove - ', response);
       });
