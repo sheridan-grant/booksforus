@@ -110,17 +110,22 @@ angular.module('booksForUs', ['ui.bootstrap'])
       book_id: book_id
     };
 
+    var idx = null;
+
     for (var i = 0; i < $scope.currentFavorites.length; i++) {
       if ($scope.currentFavorites[i].book_id == book_id) {
-        $scope.currentFavorites[i].favorite = true;
+        idx = i;
+        break;
       }
     }
 
-    if (!$scope.currentFavorites[i].favorite) {
+    if (idx == null) {
+      $scope.currentFavorites[idx].favorite = true;
       bookFactory.addFavorite(params).then(function(response) {
         console.log('add - ', response);
       });
     } else {
+      $scope.currentFavorites[idx].favorite = false;
       bookFactory.removeFavorite(params).then(function(response) {
         console.log('remove - ', response);
       });
