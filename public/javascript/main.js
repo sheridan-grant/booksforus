@@ -83,8 +83,8 @@ angular.module('booksForUs', ['ui.bootstrap'])
       });
     }
 
-    bookFactory.currentSession().then(function(response) {
-      if (response.data.user != null) {
+    bookFactory.currentSession().then(function(user) {
+      if (user.data.user != null) {
         bookFactory.getFavorites().then(function(response) {
           for (var i = 0; i < response.data.data.length; i++) {
             var id = response.data.data[i].book_id;
@@ -99,7 +99,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
           setTimeout(function(){
             bCtrl.isLoggedIn = true;
-            bCtrl.username = response.data.user;
+            bCtrl.username = user.data.user;
           }, 10);
         });
       }
