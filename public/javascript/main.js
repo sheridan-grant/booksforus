@@ -61,6 +61,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
   bCtrl.propertyName = 'title';
   bCtrl.view = "Favorite Books";
   bCtrl.viewAllBooks = true;
+  bCtrl.isLoggedin = null;
   bCtrl.username = "";
   bCtrl.password = "";
   bCtrl.reverse = false;
