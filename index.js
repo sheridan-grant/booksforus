@@ -63,7 +63,7 @@ express()
   			res.status(500).json({success: false, data: error});
   		} else {
         getAuthorId(req, function(error, data) {
-          if (error || author_id == null) {
+          if (error || data == null) {
       			res.status(500).json({success: false, data: error});
       		} else {
             console.log(data);
