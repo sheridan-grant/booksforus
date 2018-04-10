@@ -24,8 +24,8 @@ express()
   .get('/', (req, res) => res.render('pages/index'))
   .get('/currentSession', function(req, res) {
     var s = req.session;
-    if (s.favorite != null) {
-      res.status(200).json({favorite: s.favorite});
+    if (s.user != null) {
+      res.status(200).json({favorite: s.user});
     } else {
       res.status(200).json({favorite: null});
     }
@@ -62,14 +62,22 @@ express()
   .post('/addFavorite', function(req, res) {
     if (req.session.user) {
       addFavorite(req, function(error, result) {
-        console.log(result);
+        if (error || result == null) {
+    			res.status(500).json({success: false, data: error});
+    		} else {
+    			res.status(200).json({success: true});
+    		}
       });
     }
   })
   .post('/removeFavorite', function(req, res) {
     if (req.session.user) {
       removeFavorite(req, function(error, result) {
-        console.log(result);
+        if (error || result == null) {
+    			res.status(500).json({success: false, data: error});
+    		} else {
+    			res.status(200).json({success: true});
+    		}
       });
     }
   })
@@ -128,7 +136,6 @@ express()
   })
   .post('/login', function(req, res) {
     loginUser(req, function(error, result) {
-      console.log(result);
       if (error || result == null) {
   			res.status(500).json({success: false, data: error});
   		} else {
@@ -155,7 +162,7 @@ function getFavorites(req, callback) {
 
   client.connect(function(err) {
     if (err) {
-      console.log("Error connecting to DB: ")
+      console.log("Error connecting to DB: ");
       console.log(err);
       callback(err, null);
     }
@@ -170,7 +177,7 @@ function getFavorites(req, callback) {
       });
 
       if (err) {
-        console.log("Error in query: ")
+        console.log("Error in query: ");
         console.log(err);
         callback(err, null);
       }
@@ -188,7 +195,7 @@ function addFavorite(req, callback) {
 
   client.connect(function(err) {
     if (err) {
-      console.log("Error connecting to DB: ")
+      console.log("Error connecting to DB: ");
       console.log(err);
       callback(err, null);
     }
@@ -203,7 +210,7 @@ function addFavorite(req, callback) {
       });
 
       if (err) {
-        console.log("Error in query: ")
+        console.log("Error in query: ");
         console.log(err);
         callback(err, null);
       }

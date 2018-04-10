@@ -47,6 +47,10 @@ angular.module('booksForUs', ['ui.bootstrap'])
     return $http.post("/removeFavorite", book_id);
   }
 
+  bookFactory.currentSession = function() {
+    return $http.get("/currentSession");
+  }
+
   return bookFactory;
 }])
 .controller('bookController', ['$scope', 'bookFactory', function($scope, bookFactory) {
@@ -58,6 +62,10 @@ angular.module('booksForUs', ['ui.bootstrap'])
   $scope.password = "";
   $scope.isLoggedIn = false;
   $scope.reverse = false;
+
+  bookFactory.currentSession().then(function(err, response) {
+    console.log(response);
+  });
 
   $scope.signup = function() {
     var user = {
@@ -136,9 +144,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
         }
       }
 
-      bookFactory.addFavorite(params).then(function(response) {
-        console.log('add - ', response);
-      });
+      bookFactory.addFavorite(params).then(function(response) {});
     } else {
       for (var i = 0; i < $scope.currentBooks.length; i++) {
         if ($scope.currentBooks[i].book_id == book_id) {
@@ -146,9 +152,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
         }
       }
 
-      bookFactory.removeFavorite(params).then(function(response) {
-        console.log('remove - ', response);
-      });
+      bookFactory.removeFavorite(params).then(function(response) {});
     }
   };
 
