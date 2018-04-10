@@ -63,8 +63,8 @@ angular.module('booksForUs', ['ui.bootstrap'])
   $scope.isLoggedIn = false;
   $scope.reverse = false;
 
-  bookFactory.currentSession().then(function(err, response) {
-    console.log(response);
+  bookFactory.currentSession().then(function(response) {
+    console.log(response.data.user);
   });
 
   $scope.signup = function() {

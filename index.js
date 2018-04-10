@@ -25,9 +25,9 @@ express()
   .get('/currentSession', function(req, res) {
     var s = req.session;
     if (s.user != null) {
-      res.status(200).json({favorite: s.user});
+      res.status(200).json({user: s.user});
     } else {
-      res.status(200).json({favorite: null});
+      res.status(200).json({user: null});
     }
   })
   .get('/authors', function(req, res) {
@@ -35,7 +35,7 @@ express()
       if (error || result == null) {
   			res.status(500).json({success: false, data: error});
   		} else {
-  			res.status(200).json({'data' : result});
+  			res.status(200).json({data : result});
   		}
     });
   })
@@ -44,7 +44,7 @@ express()
   		if (error || result == null) {
   			res.status(500).json({success: false, data: error});
   		} else {
-  			res.status(200).json({'data' : result});
+  			res.status(200).json({data : result});
   		}
   	});
   })
