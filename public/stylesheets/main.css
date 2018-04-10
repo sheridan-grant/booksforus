@@ -147,6 +147,14 @@
   cursor: pointer;
 }
 
+.black-heart {
+  color: black;
+}
+
+.red-heart {
+  color: red;
+}
+
 .card-title {
   font-weight: bold;
   font-size: 20px;

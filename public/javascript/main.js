@@ -106,26 +106,23 @@ angular.module('booksForUs', ['ui.bootstrap'])
   };
 
   $scope.toggleFavorite = function(book_id) {
-    var favorite = false;
     var params = {
       book_id: book_id
     };
 
     for (var i = 0; i < $scope.currentFavorites.length; i++) {
       if ($scope.currentFavorites[i].book_id == book_id) {
-        favorite = true;
+        $scope.currentFavorites[i]favorite = true;
       }
     }
 
-    if (!favorite) {
-      $("#h" + book_id).css("color", "red");
+    if (!$scope.currentFavorites[i]favorite) {
       bookFactory.addFavorite(params).then(function(response) {
-        console.log(response);
+        console.log('add - ', response);
       });
     } else {
-      $("#h" + book_id).css("color", "black");
       bookFactory.removeFavorite(params).then(function(response) {
-        console.log(response);
+        console.log('remove - ', response);
       });
     }
   };
@@ -206,7 +203,8 @@ angular.module('booksForUs', ['ui.bootstrap'])
         author_id: tmp.author_id,
         score: tmp.score,
         inc: false,
-        dec: false
+        dec: false,
+        favorite: false
       });
     }
   });
@@ -253,7 +251,8 @@ angular.module('booksForUs', ['ui.bootstrap'])
               author_id: tmp.author_id,
               score: tmp.score,
               inc: false,
-              dec: false
+              dec: false,
+              favorite: false
             });
           }
 
@@ -285,7 +284,8 @@ angular.module('booksForUs', ['ui.bootstrap'])
               author_id: tmp.author_id,
               score: tmp.score,
               inc: false,
-              dec: false
+              dec: false,
+              favorite: false
             });
           }
 
