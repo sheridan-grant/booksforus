@@ -63,8 +63,50 @@ angular.module('booksForUs', ['ui.bootstrap'])
   $scope.isLoggedIn = false;
   $scope.reverse = false;
 
+  bookFactory.getBooks().then(function(books) {
+    for (var i = 0; i < books.data.data.length; i++) {
+      var tmp = books.data.data[i];
+      $scope.currentBooks.push({
+        id: i,
+        book_id: tmp.book_id,
+        title: tmp.title,
+        description: tmp.description,
+        name: tmp.name,
+        author_id: tmp.author_id,
+        score: tmp.score,
+        inc: false,
+        dec: false,
+        favorite: false
+      });
+    }
+  });
+
+  bookFactory.getAuthors().then(function(authors) {
+    for (var i = 0; i < authors.data.data.length; i++) {
+      var tmp = authors.data.data[i];
+      $scope.currentAuthors.push({
+        author_id: tmp.author_id,
+        name: tmp.name
+      });
+    }
+  });
+
   bookFactory.currentSession().then(function(response) {
-    console.log(response.data.user);
+    if (response.data.user != null) {
+      $scope.isLoggedIn = true;
+      bookFactory.getFavorites().then(function(response) {
+        for (var i = 0; i < response.data.data.length; i++) {
+          var id = response.data.data[i].book_id;
+          $scope.currentFavorites.push(id);
+          for (var j = 0; j < $scope.currentBooks.length; j++) {
+            if (id == $scope.currentBooks[j].book_id) {
+              $scope.currentBooks[j].favorite = true;
+              break;
+            }
+          }
+        }
+      });
+    }
   });
 
   $scope.signup = function() {
@@ -219,34 +261,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
         });
     }
   };
-
-  bookFactory.getBooks().then(function(books) {
-    for (var i = 0; i < books.data.data.length; i++) {
-      var tmp = books.data.data[i];
-      $scope.currentBooks.push({
-        id: i,
-        book_id: tmp.book_id,
-        title: tmp.title,
-        description: tmp.description,
-        name: tmp.name,
-        author_id: tmp.author_id,
-        score: tmp.score,
-        inc: false,
-        dec: false,
-        favorite: false
-      });
-    }
-  });
-
-  bookFactory.getAuthors().then(function(authors) {
-    for (var i = 0; i < authors.data.data.length; i++) {
-      var tmp = authors.data.data[i];
-      $scope.currentAuthors.push({
-        author_id: tmp.author_id,
-        name: tmp.name
-      });
-    }
-  });
 
   $scope.addBook = function() {
     var author_id = null;
