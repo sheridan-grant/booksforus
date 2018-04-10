@@ -60,7 +60,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
   $scope.propertyName = 'title';
   $scope.username = "";
   $scope.password = "";
-  $scope.isLoggedIn = false;
   $scope.reverse = false;
 
   bookFactory.getBooks().then(function(books) {
@@ -347,6 +346,8 @@ angular.module('booksForUs', ['ui.bootstrap'])
           }
         }
       });
+    } else {
+      $scope.isLoggedIn = false;
     }
   });
 
