@@ -53,7 +53,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
   return bookFactory;
 }])
-.controller('bookController', ['$scope', 'bookFactory', function($scope, bookFactory) {
+.controller('bookController', ['bookFactory', function($scope, bookFactory) {
   var bCtrl = this;
   bCtrl.currentBooks = [];
   bCtrl.currentFavorites = [];
@@ -102,7 +102,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
               bCtrl.isLoggedIn = true;
               bCtrl.username = user.data.user;
             });
-          }, 1000);
+          });
         });
       }
     });
