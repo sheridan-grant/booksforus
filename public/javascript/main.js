@@ -169,7 +169,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
     var author_id = null;
 
     for (var i = 0; i < $scope.currentAuthors.length; i++) {
-      if ($scope.currentAuthors[i].name = $scope.newAuthor) {
+      if ($scope.currentAuthors[i].name == $scope.newAuthor) {
         author_id = $scope.currentAuthors[i].author_id;
         break;
       }
