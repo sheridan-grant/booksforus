@@ -102,6 +102,7 @@ express()
   })
   .post('/login', function(req, res) {
     loginUser(req, function(error, result) {
+      console.log(result);
       if (error || result == null) {
   			res.status(500).json({success: false, data: error});
   		} else {

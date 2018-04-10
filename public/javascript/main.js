@@ -39,6 +39,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
 }])
 .controller('bookController', ['$scope', 'bookFactory', function($scope, bookFactory) {
   $scope.currentBooks = [];
+  $scope.currentFavorites = [];
   $scope.currentAuthors = [];
   $scope.propertyName = 'title';
   $scope.username = "";
