@@ -58,12 +58,16 @@ express()
     });
   })
   .post('/addAuthor', function(req, res) {
+    console.log("1");
     addAuthor(req, function(error, result) {
+      console.log("4");
       if (error || result == null) {
   			res.status(500).json({success: false, data: error});
   		} else {
         req.body.author = result.data.author_id;
   			addBook(req, function(error, bookResult) {
+          console.log(result.data.author_id);
+          console.log(req.body.author);
           if (error || bookResult == null) {
       			res.status(500).json({success: false, data: error});
       		} else {
@@ -255,7 +259,7 @@ function addAuthor(callback) {
       console.log(err);
       callback(err, null);
     }
-
+    console.log(req.body.author);
     var sql = "INSERT INTO author a WHERE a.name = $1;";
     var params = [req.body.author];
 
@@ -286,7 +290,7 @@ function addAuthor(callback) {
           console.log(err);
           callback(err, null);
         }
-
+        console.log(result.rows);
         callback(null, result.rows);
       });
     });
