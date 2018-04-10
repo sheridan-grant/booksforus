@@ -53,7 +53,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
   return bookFactory;
 }])
-.controller('bookController', ['bookFactory', function(bookFactory) {
+.controller('bookController', ['$scope', 'bookFactory', function($scope, bookFactory) {
   var bCtrl = this;
   bCtrl.currentBooks = [];
   bCtrl.currentFavorites = [];
@@ -61,7 +61,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
   bCtrl.propertyName = 'title';
   bCtrl.view = "Favorite Books";
   bCtrl.viewAllBooks = true;
-  bCtrl.isLoggedin = null;
   bCtrl.username = "";
   bCtrl.password = "";
   bCtrl.reverse = false;
@@ -98,6 +97,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
           }
           bCtrl.isLoggedIn = true;
           bCtrl.username = response.data.user;
+          $scope.$apply();
         });
       } else {
         bCtrl.isLoggedIn = false;
