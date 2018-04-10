@@ -24,8 +24,8 @@ express()
   .get('/', (req, res) => res.render('pages/index'))
   .get('/currentSession', function(req, res) {
     var s = req.session;
-    if (s.user != null) {
-      res.status(200).json({user: s.user});
+    if (s.username != null) {
+      res.status(200).json({user: s.username});
     } else {
       res.status(200).json({user: null});
     }
