@@ -92,7 +92,16 @@ angular.module('booksForUs', ['ui.bootstrap'])
           $scope.password = "";
           $scope.isLoggedin = true;
           bookFactory.getFavorites().then(function(response) {
-            console.log('favs - ', response);
+            for (var i = 0; i < response.data.data.length; i++) {
+              var id = response.data.data[i].book_id;
+              $scope.currentFavorites.push(id);
+              for (var j = 0; j < $scope.currentBooks.length; j++) {
+                if (id == $scope.currentBooks[j].book_id) {
+                  $scope.currentBooks[j].favorite = true;
+                  break;
+                }
+              }
+            }
           });
         }
       });
