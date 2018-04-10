@@ -19,6 +19,10 @@ angular.module('booksForUs', ['ui.bootstrap'])
     return $http.post("/addBook", book);
   };
 
+  bookFactory.addAuthor = function(author) {
+    return $http.post("/addAuthor", author);
+  };
+
   bookFactory.getBooks = function() {
     return $http.get("/books");
   };
