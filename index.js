@@ -48,6 +48,27 @@ express()
   		}
   	});
   })
+  .get('/getFavorites', function(req, res) {
+    if (req.session.user) {
+      getFavorites(req, function(error, result) {
+        console.log(result);
+      });
+    }
+  })
+  .post('/addFavorite', function(req, res) {
+    if (req.session.user) {
+      addFavorite(req, function(error, result) {
+        console.log(result);
+      });
+    }
+  })
+  .post('/removeFavorite', function(req, res) {
+    if (req.session.user) {
+      removeFavorite(req, function(error, result) {
+        console.log(result);
+      });
+    }
+  })
   .post('/addBook', function(req, res) {
     addBook(req, function(error, result) {
       if (error || result == null) {
@@ -121,6 +142,105 @@ express()
     }
   })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
+function getFavorites(req, callback) {
+  var client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
+
+  client.connect(function(err) {
+    if (err) {
+      console.log("Error connecting to DB: ")
+      console.log(err);
+      callback(err, null);
+    }
+
+    var sql = "SELECT * FROM favorite_books_list f WHERE f.user_id = $1";
+    var params = [req.session.user];
+
+    client.query(sql, params, function(err, result) {
+
+      client.end(function(err) {
+        if (err) throw err;
+      });
+
+      if (err) {
+        console.log("Error in query: ")
+        console.log(err);
+        callback(err, null);
+      }
+
+      callback(null, result.rows);
+    });
+  });
+}
+
+function addFavorite(req, callback) {
+  var client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
+
+  client.connect(function(err) {
+    if (err) {
+      console.log("Error connecting to DB: ")
+      console.log(err);
+      callback(err, null);
+    }
+
+    var sql = "INSERT INTO favorite_books_list (user_id, book_id) VALUES ($1, $2);";
+    var params = [req.session.user, req.body.book_id];
+
+    client.query(sql, params, function(err, result) {
+
+      client.end(function(err) {
+        if (err) throw err;
+      });
+
+      if (err) {
+        console.log("Error in query: ")
+        console.log(err);
+        callback(err, null);
+      }
+
+      callback(null, result.rows);
+    });
+  });
+}
+
+function removeFavorite(req, callback) {
+  var client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
+
+  client.connect(function(err) {
+    if (err) {
+      console.log("Error connecting to DB: ")
+      console.log(err);
+      callback(err, null);
+    }
+
+    var sql = "DELETE FROM favorite_books_list f WHERE f.user_id = $1 AND f.book_id = $2;";
+    var params = [req.session.user, req.body.book_id];
+
+    client.query(sql, params, function(err, result) {
+
+      client.end(function(err) {
+        if (err) throw err;
+      });
+
+      if (err) {
+        console.log("Error in query: ")
+        console.log(err);
+        callback(err, null);
+      }
+
+      callback(null, result.rows);
+    });
+  });
+}
 
 function loginUser(req, callback) {
   var client = new Client({

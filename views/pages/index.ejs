@@ -79,7 +79,7 @@
           <div class="results">
             <div class="card" ng-repeat="book in currentBooks | filter:search | orderBy:propertyName:reverse">
               <div class="card-body">
-                <span class="heart glyphicon glyphicon-heart"></span>
+                <span id="h{{book.book_id}}" class="heart glyphicon glyphicon-heart" ng-click="toggleFavorite(book.book_id)"></span>
                 <h5 class="card-title"> {{book.title}} </h5>
                 <p class="card-text"> {{book.description}} </p>
               </div>

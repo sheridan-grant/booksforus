@@ -35,6 +35,18 @@ angular.module('booksForUs', ['ui.bootstrap'])
     return $http.put("/changeScore", score);
   }
 
+  bookFactory.getFavorites = function() {
+    return $http.get("/getFavorites");
+  }
+
+  bookFactory.addFavorite = function(book_id) {
+    return $http.get("/addFavorite", book_id);
+  }
+
+  bookFactory.removeFavorite = function(book_id) {
+    return $http.get("/removeFavorite", book_id);
+  }
+
   return bookFactory;
 }])
 .controller('bookController', ['$scope', 'bookFactory', function($scope, bookFactory) {
@@ -55,9 +67,14 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
     if (user.username != "" && user.password != "") {
       bookFactory.signup(user).then(function(response) {
-        $scope.username = "";
-        $scope.password = "";
-        $scope.isLoggedin = true;
+        if (response.data.success) {
+          $scope.username = "";
+          $scope.password = "";
+          $scope.isLoggedin = true;
+          bookFactory.getFavorites().then(function(response) {
+            console.log(response);
+          });
+        }
       });
     }
   };
@@ -70,10 +87,14 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
     if (user.username != "" && user.password != "") {
       bookFactory.login(user).then(function(response) {
-        console.log(response);
-        $scope.username = "";
-        $scope.password = "";
-        $scope.isLoggedin = true;
+        if (response.data.success) {
+          $scope.username = "";
+          $scope.password = "";
+          $scope.isLoggedin = true;
+          bookFactory.getFavorites().then(function(response) {
+            console.log(response);
+          });
+        }
       });
     }
   };
@@ -82,6 +103,31 @@ angular.module('booksForUs', ['ui.bootstrap'])
     bookFactory.logout().then(function(response) {
       $scope.isLoggedin = false;
     });
+  };
+
+  $scope.toggleFavorite = function(book_id) {
+    var favorite = false;
+    var params = {
+      book_id: book_id
+    };
+
+    for (var i = 0; i < $scope.currentFavorites.length; i++) {
+      if ($scope.currentFavorites[i].book_id == book_id) {
+        favorite = true;
+      }
+    }
+
+    if (!favorite) {
+      $("#h" + book_id).css("color", "red");
+      bookFactory.addFavorite(params).then(function(response) {
+        console.log(response);
+      });
+    } else {
+      $("#h" + book_id).css("color", "black");
+      bookFactory.removeFavorite(params).then(function(response) {
+        console.log(response);
+      });
+    }
   };
 
   $scope.titleFilter = function(filterType) {
