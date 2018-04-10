@@ -62,15 +62,19 @@ express()
       if (error || result == null) {
   			res.status(500).json({success: false, data: error});
   		} else {
-        req.body.author = result.data.author_id;
-  			addBook(req, function(error, bookResult) {
-          console.log(result.data.author_id);
-          console.log(req.body.author);
-          if (error || bookResult == null) {
+        getAuthorId(req, function(error, author_id) {
+          if (error || author_id == null) {
       			res.status(500).json({success: false, data: error});
       		} else {
-      			res.status(200).json({success: true});
-      		}
+            req.body.author = author_id;
+            addBook(req, function(error, bookResult) {
+              if (error || bookResult == null) {
+          			res.status(500).json({success: false, data: error});
+          		} else {
+          			res.status(200).json({success: true});
+          		}
+            });
+          }
         });
   		}
     });
@@ -250,7 +254,6 @@ function addAuthor(req, callback) {
     ssl: true
   });
 
-  // Add an author
   client.connect(function(err) {
     if (err) {
       console.log("Error connecting to DB: ")
@@ -272,25 +275,39 @@ function addAuthor(req, callback) {
         console.log(err);
         callback(err, null);
       }
+    });
+  });
+}
 
-      // get the newest author
-      sql = "SELECT author_id FROM author a Where a.name = $1;";
-      params = [req.body.author];
+function getAuthorId(req, callback) {
+  var client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
 
-      client.query(sql, params, function(err, result) {
+  client.connect(function(err) {
+    if (err) {
+      console.log("Error connecting to DB: ")
+      console.log(err);
+      callback(err, null);
+    }
 
-        client.end(function(err) {
-          if (err) throw err;
-        });
+    var sql = "SELECT author_id FROM author a Where a.name = $1;";
+    var params = [req.body.author];
 
-        if (err) {
-          console.log("Error in query: ")
-          console.log(err);
-          callback(err, null);
-        }
-        console.log(result);
-        callback(null, result.rows);
+    client.query(sql, params, function(err, result) {
+
+      client.end(function(err) {
+        if (err) throw err;
       });
+
+      if (err) {
+        console.log("Error in query: ")
+        console.log(err);
+        callback(err, null);
+      }
+      console.log(result);
+      callback(null, result.rows);
     });
   });
 }
