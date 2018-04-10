@@ -95,6 +95,7 @@ express()
         if (error || result == null) {
     			res.status(500).json({success: false, data: error});
     		} else {
+          req.session.user = result[0].user_id;
     			res.status(200).json({success: true});
     		}
       });
@@ -106,6 +107,7 @@ express()
       if (error || result == null) {
   			res.status(500).json({success: false, data: error});
   		} else {
+        req.session.user = result[0].user_id;
   			res.status(200).json({success: true});
   		}
     });

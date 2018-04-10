@@ -70,6 +70,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
     if (user.username != "" && user.password != "") {
       bookFactory.login(user).then(function(response) {
+        console.log(response);
         $scope.username = "";
         $scope.password = "";
         $scope.isLoggedin = true;
