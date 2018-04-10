@@ -54,7 +54,9 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
     if (user.username != "" && user.password != "") {
       bookFactory.signup(user).then(function(response) {
-        $scope.isLoggedin = true;
+        $scope.$applyAsync(function() {
+          $scope.isLoggedin = true;
+        });
       });
     }
   };
@@ -67,7 +69,9 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
     if (user.username != "" && user.password != "") {
       bookFactory.login(user).then(function(response) {
-        $scope.isLoggedin = true;
+        $scope.$applyAsync(function() {
+          $scope.isLoggedin = true;
+        });
       });
     }
   };
