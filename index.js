@@ -62,11 +62,12 @@ express()
       if (error || result == null) {
   			res.status(500).json({success: false, data: error});
   		} else {
-        getAuthorId(req, function(error, author_id) {
+        getAuthorId(req, function(error, data) {
           if (error || author_id == null) {
       			res.status(500).json({success: false, data: error});
       		} else {
-            req.body.author = author_id;
+            console.log(data);
+            req.body.author = data.data.author_id;
             addBook(req, function(error, bookResult) {
               if (error || bookResult == null) {
           			res.status(500).json({success: false, data: error});
@@ -308,8 +309,6 @@ function getAuthorId(req, callback) {
         console.log(err);
         callback(err, null);
       }
-
-      console.log(result);
 
       callback(null, result.rows);
     });
