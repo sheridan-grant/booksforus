@@ -67,7 +67,7 @@ express()
       			res.status(500).json({success: false, data: error});
       		} else {
             console.log(data);
-            req.body.author = data.data.author_id;
+            req.body.author = data[0].author_id;
             addBook(req, function(error, bookResult) {
               if (error || bookResult == null) {
           			res.status(500).json({success: false, data: error});
