@@ -51,7 +51,11 @@ express()
   .get('/getFavorites', function(req, res) {
     if (req.session.user) {
       getFavorites(req, function(error, result) {
-        console.log(result);
+        if (error || result == null) {
+    			res.status(500).json({success: false, data: error});
+    		} else {
+    			res.status(200).json({success: true, data: result});
+    		}
       });
     }
   })
@@ -204,7 +208,7 @@ function addFavorite(req, callback) {
         callback(err, null);
       }
 
-      callback(null, result.rows);
+      callback(null, result);
     });
   });
 }
@@ -237,7 +241,7 @@ function removeFavorite(req, callback) {
         callback(err, null);
       }
 
-      callback(null, result.rows);
+      callback(null, result);
     });
   });
 }
