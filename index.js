@@ -288,7 +288,7 @@ function addAuthor(req, callback) {
           console.log(err);
           callback(err, null);
         }
-
+        console.log(result);
         callback(null, result.rows);
       });
     });
