@@ -100,7 +100,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
       $scope.view = "Favorite Books";
       $scope.viewAllBooks = true;
     }
-  }
+  };
 
   $scope.signup = function() {
     var user = {
@@ -111,8 +111,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
     if (user.username != "" && user.password != "") {
       bookFactory.signup(user).then(function(response) {
         if (response.data.success) {
-          $scope.username = "";
-          $scope.password = "";
           $scope.isLoggedin = true;
           bookFactory.getFavorites().then(function(response) {
             console.log(response);
@@ -131,8 +129,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
     if (user.username != "" && user.password != "") {
       bookFactory.login(user).then(function(response) {
         if (response.data.success) {
-          $scope.username = "";
-          $scope.password = "";
           $scope.isLoggedin = true;
           bookFactory.getFavorites().then(function(response) {
             for (var i = 0; i < response.data.data.length; i++) {
@@ -153,6 +149,8 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
   $scope.logout = function() {
     bookFactory.logout().then(function(response) {
+      $scope.username = "";
+      $scope.password = "";
       $scope.isLoggedin = false;
       $scope.currentFavorites.length = 0;
     });
