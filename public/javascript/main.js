@@ -111,6 +111,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
   $scope.logout = function() {
     bookFactory.logout().then(function(response) {
       $scope.isLoggedin = false;
+      $scope.currentFavorites.length = 0;
     });
   };
 
@@ -128,7 +129,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
       }
     }
 
-    if (!fav) {
+    if (fav) {
       for (var i = 0; i < $scope.currentBooks.length; i++) {
         if ($scope.currentBooks[i].book_id == book_id) {
           $scope.currentBooks[i].favorite = true;
