@@ -91,24 +91,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
     }
   });
 
-  bookFactory.currentSession().then(function(response) {
-    if (response.data.user != null) {
-      $scope.isLoggedIn = true;
-      bookFactory.getFavorites().then(function(response) {
-        for (var i = 0; i < response.data.data.length; i++) {
-          var id = response.data.data[i].book_id;
-          $scope.currentFavorites.push(id);
-          for (var j = 0; j < $scope.currentBooks.length; j++) {
-            if (id == $scope.currentBooks[j].book_id) {
-              $scope.currentBooks[j].favorite = true;
-              break;
-            }
-          }
-        }
-      });
-    }
-  });
-
   $scope.signup = function() {
     var user = {
       username: $scope.username,
@@ -349,4 +331,23 @@ angular.module('booksForUs', ['ui.bootstrap'])
     },
     getterSetter: true
   };
+
+  bookFactory.currentSession().then(function(response) {
+    if (response.data.user != null) {
+      $scope.isLoggedIn = true;
+      bookFactory.getFavorites().then(function(response) {
+        for (var i = 0; i < response.data.data.length; i++) {
+          var id = response.data.data[i].book_id;
+          $scope.currentFavorites.push(id);
+          for (var j = 0; j < $scope.currentBooks.length; j++) {
+            if (id == $scope.currentBooks[j].book_id) {
+              $scope.currentBooks[j].favorite = true;
+              break;
+            }
+          }
+        }
+      });
+    }
+  });
+
 }]);
