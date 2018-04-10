@@ -64,7 +64,8 @@ angular.module('booksForUs', ['ui.bootstrap'])
   bCtrl.username = "";
   bCtrl.password = "";
   bCtrl.reverse = false;
-
+  bCtrl.isLoggedIn = false;
+  
   bookFactory.getBooks().then(function(books) {
     for (var i = 0; i < books.data.data.length; i++) {
       var tmp = books.data.data[i];
@@ -101,8 +102,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
             bCtrl.username = response.data.user;
           }, 10);
         });
-      } else {
-        bCtrl.isLoggedIn = false;
       }
     });
   });
