@@ -97,8 +97,12 @@ angular.module('booksForUs', ['ui.bootstrap'])
             }
           }
 
-          bCtrl.isLoggedIn = true;
-          bCtrl.username = user.data.user;
+          setTimeout(function () {
+            $scope.$apply(function () {
+              bCtrl.isLoggedIn = true;
+              bCtrl.username = user.data.user;
+            });
+          }, 10);
         });
       }
     });
