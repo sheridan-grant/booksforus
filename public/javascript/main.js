@@ -131,13 +131,13 @@ angular.module('booksForUs', ['ui.bootstrap'])
     var fav = false;
 
     for (var i = 0; i < $scope.currentFavorites.length; i++) {
-      if ($scope.currentFavorites[i].book_id == book_id) {
+      if ($scope.currentFavorites[i] == book_id) {
         fav = true;
         break;
       }
     }
 
-    if (fav) {
+    if (!fav) {
       for (var i = 0; i < $scope.currentBooks.length; i++) {
         if ($scope.currentBooks[i].book_id == book_id) {
           $scope.currentBooks[i].favorite = true;
