@@ -112,11 +112,11 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
     for (var i = 0; i < $scope.currentFavorites.length; i++) {
       if ($scope.currentFavorites[i].book_id == book_id) {
-        $scope.currentFavorites[i]favorite = true;
+        $scope.currentFavorites[i].favorite = true;
       }
     }
 
-    if (!$scope.currentFavorites[i]favorite) {
+    if (!$scope.currentFavorites[i].favorite) {
       bookFactory.addFavorite(params).then(function(response) {
         console.log('add - ', response);
       });
