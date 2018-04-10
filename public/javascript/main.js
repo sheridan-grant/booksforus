@@ -81,6 +81,27 @@ angular.module('booksForUs', ['ui.bootstrap'])
         favorite: false
       });
     }
+
+    bookFactory.currentSession().then(function(response) {
+      if (response.data.user != null) {
+        bCtrl.isLoggedIn = true;
+        bCtrl.username = response.data.user;
+        bookFactory.getFavorites().then(function(response) {
+          for (var i = 0; i < response.data.data.length; i++) {
+            var id = response.data.data[i].book_id;
+            bCtrl.currentFavorites.push(id);
+            for (var j = 0; j < bCtrl.currentBooks.length; j++) {
+              if (id == bCtrl.currentBooks[j].book_id) {
+                bCtrl.currentBooks[j].favorite = true;
+                break;
+              }
+            }
+          }
+        });
+      } else {
+        bCtrl.isLoggedIn = false;
+      }
+    });
   });
 
   bookFactory.getAuthors().then(function(authors) {
@@ -341,26 +362,5 @@ angular.module('booksForUs', ['ui.bootstrap'])
     },
     getterSetter: true
   };
-
-  bookFactory.currentSession().then(function(response) {
-    if (response.data.user != null) {
-      bCtrl.isLoggedIn = true;
-      bCtrl.username = response.data.user;
-      bookFactory.getFavorites().then(function(response) {
-        for (var i = 0; i < response.data.data.length; i++) {
-          var id = response.data.data[i].book_id;
-          bCtrl.currentFavorites.push(id);
-          for (var j = 0; j < bCtrl.currentBooks.length; j++) {
-            if (id == bCtrl.currentBooks[j].book_id) {
-              bCtrl.currentBooks[j].favorite = true;
-              break;
-            }
-          }
-        }
-      });
-    } else {
-      bCtrl.isLoggedIn = false;
-    }
-  });
 
 }]);
