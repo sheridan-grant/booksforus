@@ -179,8 +179,6 @@ angular.module('booksForUs', ['ui.bootstrap'])
       }
     }
 
-    console.log(author_id);
-
     if (author_id != null) {
 
       var params = {

@@ -90,19 +90,23 @@ express()
     });
   })
   .post('/signup', function(req, res) {
-    signupUser(req, function(error, result) {
-      res.setHeader('Content-Type', 'application/json');
-      res.send({ favorite: [] });
+    signupUser(req, function(error, data) {
+      loginUser(req, function(error, result) {
+        if (error || result == null) {
+    			res.status(500).json({success: false, data: error});
+    		} else {
+    			res.status(200).json({success: true});
+    		}
+      });
     });
   })
   .post('/login', function(req, res) {
     loginUser(req, function(error, result) {
-      console.log(result);
-      if (result.length != 0) {
-
-      } else {
-
-      }
+      if (error || result == null) {
+  			res.status(500).json({success: false, data: error});
+  		} else {
+  			res.status(200).json({success: true});
+  		}
     });
   })
   .post('/logout', function(req, res) {
@@ -147,7 +151,36 @@ function loginUser(req, callback) {
 }
 
 function signupUser(req, callback) {
+  var client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
 
+  client.connect(function(err) {
+    if (err) {
+      console.log("Error connecting to DB: ")
+      console.log(err);
+      callback(err, null);
+    }
+
+    var sql = "INSERT INTO users (username, password) VALUES ($1, $2);";
+    var params = [req.body.username, req.body.password];
+
+    client.query(sql, params, function(err, result) {
+
+      client.end(function(err) {
+        if (err) throw err;
+      });
+
+      if (err) {
+        console.log("Error in query: ")
+        console.log(err);
+        callback(err, null);
+      }
+
+      callback(null, result.rows);
+    });
+  });
 }
 
 function changeScore(req, callback) {
