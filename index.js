@@ -244,7 +244,7 @@ function addBook(req, callback) {
   });
 }
 
-function addAuthor(callback) {
+function addAuthor(req, callback) {
   var client = new Client({
     connectionString: process.env.DATABASE_URL,
     ssl: true
