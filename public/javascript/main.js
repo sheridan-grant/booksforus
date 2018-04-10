@@ -102,7 +102,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
               bCtrl.isLoggedIn = true;
               bCtrl.username = user.data.user;
             });
-          }, 10);
+          }, 1000);
         });
       }
     });
