@@ -53,21 +53,22 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
   return bookFactory;
 }])
-.controller('bookController', ['$scope', 'bookFactory', function($scope, bookFactory) {
-  $scope.currentBooks = [];
-  $scope.currentFavorites = [];
-  $scope.currentAuthors = [];
-  $scope.propertyName = 'title';
-  $scope.view = "Favorite Books";
-  $scope.viewAllBooks = true;
-  $scope.username = "";
-  $scope.password = "";
-  $scope.reverse = false;
+.controller('bookController', ['bookFactory', function(bookFactory) {
+  var bCtrl = this;
+  bCtrl.currentBooks = [];
+  bCtrl.currentFavorites = [];
+  bCtrl.currentAuthors = [];
+  bCtrl.propertyName = 'title';
+  bCtrl.view = "Favorite Books";
+  bCtrl.viewAllBooks = true;
+  bCtrl.username = "";
+  bCtrl.password = "";
+  bCtrl.reverse = false;
 
   bookFactory.getBooks().then(function(books) {
     for (var i = 0; i < books.data.data.length; i++) {
       var tmp = books.data.data[i];
-      $scope.currentBooks.push({
+      bCtrl.currentBooks.push({
         id: i,
         book_id: tmp.book_id,
         title: tmp.title,
@@ -85,33 +86,33 @@ angular.module('booksForUs', ['ui.bootstrap'])
   bookFactory.getAuthors().then(function(authors) {
     for (var i = 0; i < authors.data.data.length; i++) {
       var tmp = authors.data.data[i];
-      $scope.currentAuthors.push({
+      bCtrl.currentAuthors.push({
         author_id: tmp.author_id,
         name: tmp.name
       });
     }
   });
 
-  $scope.changeView = function() {
-    if ($scope.view == "Favorite Books") {
-      $scope.view = "All Books";
-      $scope.viewAllBooks = false;
+  bCtrl.changeView = function() {
+    if (bCtrl.view == "Favorite Books") {
+      bCtrl.view = "All Books";
+      bCtrl.viewAllBooks = false;
     } else {
-      $scope.view = "Favorite Books";
-      $scope.viewAllBooks = true;
+      bCtrl.view = "Favorite Books";
+      bCtrl.viewAllBooks = true;
     }
   };
 
-  $scope.signup = function() {
+  bCtrl.signup = function() {
     var user = {
-      username: $scope.username,
-      password: $scope.password
+      username: bCtrl.username,
+      password: bCtrl.password
     };
 
     if (user.username != "" && user.password != "") {
       bookFactory.signup(user).then(function(response) {
         if (response.data.success) {
-          $scope.isLoggedin = true;
+          bCtrl.isLoggedin = true;
           bookFactory.getFavorites().then(function(response) {
             console.log(response);
           });
@@ -120,23 +121,23 @@ angular.module('booksForUs', ['ui.bootstrap'])
     }
   };
 
-  $scope.login = function() {
+  bCtrl.login = function() {
     var user = {
-      username: $scope.username,
-      password: $scope.password
+      username: bCtrl.username,
+      password: bCtrl.password
     };
 
     if (user.username != "" && user.password != "") {
       bookFactory.login(user).then(function(response) {
         if (response.data.success) {
-          $scope.isLoggedin = true;
+          bCtrl.isLoggedin = true;
           bookFactory.getFavorites().then(function(response) {
             for (var i = 0; i < response.data.data.length; i++) {
               var id = response.data.data[i].book_id;
-              $scope.currentFavorites.push(id);
-              for (var j = 0; j < $scope.currentBooks.length; j++) {
-                if (id == $scope.currentBooks[j].book_id) {
-                  $scope.currentBooks[j].favorite = true;
+              bCtrl.currentFavorites.push(id);
+              for (var j = 0; j < bCtrl.currentBooks.length; j++) {
+                if (id == bCtrl.currentBooks[j].book_id) {
+                  bCtrl.currentBooks[j].favorite = true;
                   break;
                 }
               }
@@ -147,41 +148,41 @@ angular.module('booksForUs', ['ui.bootstrap'])
     }
   };
 
-  $scope.logout = function() {
+  bCtrl.logout = function() {
     bookFactory.logout().then(function(response) {
-      $scope.username = "";
-      $scope.password = "";
-      $scope.isLoggedin = false;
-      $scope.currentFavorites.length = 0;
+      bCtrl.username = "";
+      bCtrl.password = "";
+      bCtrl.isLoggedin = false;
+      bCtrl.currentFavorites.length = 0;
     });
   };
 
-  $scope.toggleFavorite = function(book_id) {
+  bCtrl.toggleFavorite = function(book_id) {
     var params = {
       book_id: book_id
     };
 
     var fav = false;
 
-    for (var i = 0; i < $scope.currentFavorites.length; i++) {
-      if ($scope.currentFavorites[i] == book_id) {
+    for (var i = 0; i < bCtrl.currentFavorites.length; i++) {
+      if (bCtrl.currentFavorites[i] == book_id) {
         fav = true;
         break;
       }
     }
 
     if (!fav) {
-      for (var i = 0; i < $scope.currentBooks.length; i++) {
-        if ($scope.currentBooks[i].book_id == book_id) {
-          $scope.currentBooks[i].favorite = true;
+      for (var i = 0; i < bCtrl.currentBooks.length; i++) {
+        if (bCtrl.currentBooks[i].book_id == book_id) {
+          bCtrl.currentBooks[i].favorite = true;
         }
       }
 
       bookFactory.addFavorite(params).then(function(response) {});
     } else {
-      for (var i = 0; i < $scope.currentBooks.length; i++) {
-        if ($scope.currentBooks[i].book_id == book_id) {
-          $scope.currentBooks[i].favorite = false;
+      for (var i = 0; i < bCtrl.currentBooks.length; i++) {
+        if (bCtrl.currentBooks[i].book_id == book_id) {
+          bCtrl.currentBooks[i].favorite = false;
         }
       }
 
@@ -189,76 +190,76 @@ angular.module('booksForUs', ['ui.bootstrap'])
     }
   };
 
-  $scope.titleFilter = function(filterType) {
+  bCtrl.titleFilter = function(filterType) {
     if (filterType == 1) {
-      $scope.propertyName = 'title';
-      $scope.reverse = false;
+      bCtrl.propertyName = 'title';
+      bCtrl.reverse = false;
     } else {
-      $scope.propertyName = 'title';
-      $scope.reverse = true;
+      bCtrl.propertyName = 'title';
+      bCtrl.reverse = true;
     }
   };
 
-  $scope.scoreFilter = function(filterType) {
+  bCtrl.scoreFilter = function(filterType) {
     if (filterType == 1) {
-      $scope.propertyName = 'score';
-      $scope.reverse = false;
+      bCtrl.propertyName = 'score';
+      bCtrl.reverse = false;
     } else {
-      $scope.propertyName = 'score';
-      $scope.reverse = true;
+      bCtrl.propertyName = 'score';
+      bCtrl.reverse = true;
     }
   };
 
-  $scope.incrementScore = function(idx) {
-    if (!$scope.currentBooks[idx].inc &&
-        $scope.currentBooks[idx].score == 0) {
-      $scope.currentBooks[idx].score++;
-      $scope.currentBooks[idx].inc = true;
-      $scope.currentBooks[idx].dec = false;
+  bCtrl.incrementScore = function(idx) {
+    if (!bCtrl.currentBooks[idx].inc &&
+        bCtrl.currentBooks[idx].score == 0) {
+      bCtrl.currentBooks[idx].score++;
+      bCtrl.currentBooks[idx].inc = true;
+      bCtrl.currentBooks[idx].dec = false;
       bookFactory.changeScore({
-          score: $scope.currentBooks[idx].score,
-          book_id: $scope.currentBooks[idx].book_id
+          score: bCtrl.currentBooks[idx].score,
+          book_id: bCtrl.currentBooks[idx].book_id
         });
-    } else if ($scope.currentBooks[idx].dec &&
-              !$scope.currentBooks[idx].inc) {
-      $scope.currentBooks[idx].score = 0;
-      $scope.currentBooks[idx].inc = false;
-      $scope.currentBooks[idx].dec = false;
+    } else if (bCtrl.currentBooks[idx].dec &&
+              !bCtrl.currentBooks[idx].inc) {
+      bCtrl.currentBooks[idx].score = 0;
+      bCtrl.currentBooks[idx].inc = false;
+      bCtrl.currentBooks[idx].dec = false;
       bookFactory.changeScore({
-          score: $scope.currentBooks[idx].score,
-          book_id: $scope.currentBooks[idx].book_id
-        });
-    }
-  };
-
-  $scope.decrementScore = function(idx) {
-    if (!$scope.currentBooks[idx].dec &&
-        $scope.currentBooks[idx].score == 0) {
-      $scope.currentBooks[idx].score--;
-      $scope.currentBooks[idx].dec = true;
-      $scope.currentBooks[idx].inc = false;
-      bookFactory.changeScore({
-          score: $scope.currentBooks[idx].score,
-          book_id: $scope.currentBooks[idx].book_id
-        });
-    } else if ($scope.currentBooks[idx].inc &&
-              !$scope.currentBooks[idx].dec) {
-      $scope.currentBooks[idx].score = 0;
-      $scope.currentBooks[idx].inc = false;
-      $scope.currentBooks[idx].dec = false;
-      bookFactory.changeScore({
-          score: $scope.currentBooks[idx].score,
-          book_id: $scope.currentBooks[idx].book_id
+          score: bCtrl.currentBooks[idx].score,
+          book_id: bCtrl.currentBooks[idx].book_id
         });
     }
   };
 
-  $scope.addBook = function() {
+  bCtrl.decrementScore = function(idx) {
+    if (!bCtrl.currentBooks[idx].dec &&
+        bCtrl.currentBooks[idx].score == 0) {
+      bCtrl.currentBooks[idx].score--;
+      bCtrl.currentBooks[idx].dec = true;
+      bCtrl.currentBooks[idx].inc = false;
+      bookFactory.changeScore({
+          score: bCtrl.currentBooks[idx].score,
+          book_id: bCtrl.currentBooks[idx].book_id
+        });
+    } else if (bCtrl.currentBooks[idx].inc &&
+              !bCtrl.currentBooks[idx].dec) {
+      bCtrl.currentBooks[idx].score = 0;
+      bCtrl.currentBooks[idx].inc = false;
+      bCtrl.currentBooks[idx].dec = false;
+      bookFactory.changeScore({
+          score: bCtrl.currentBooks[idx].score,
+          book_id: bCtrl.currentBooks[idx].book_id
+        });
+    }
+  };
+
+  bCtrl.addBook = function() {
     var author_id = null;
 
-    for (var i = 0; i < $scope.currentAuthors.length; i++) {
-      if ($scope.currentAuthors[i].name == $scope.newAuthor) {
-        author_id = $scope.currentAuthors[i].author_id;
+    for (var i = 0; i < bCtrl.currentAuthors.length; i++) {
+      if (bCtrl.currentAuthors[i].name == bCtrl.newAuthor) {
+        author_id = bCtrl.currentAuthors[i].author_id;
         break;
       }
     }
@@ -267,16 +268,16 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
       var params = {
         author: author_id,
-        title: $scope.newTitle,
-        desc: $scope.newDescription
+        title: bCtrl.newTitle,
+        desc: bCtrl.newDescription
       };
 
       bookFactory.addBook(params).then(function(response) {
         bookFactory.getBooks().then(function(books) {
-          $scope.currentBooks = [];
+          bCtrl.currentBooks = [];
           for (var i = 0; i < books.data.data.length; i++) {
             var tmp = books.data.data[i];
-            $scope.currentBooks.push({
+            bCtrl.currentBooks.push({
               id: i,
               book_id: tmp.book_id,
               title: tmp.title,
@@ -290,26 +291,26 @@ angular.module('booksForUs', ['ui.bootstrap'])
             });
           }
 
-          $scope.newTitle = "";
-          $scope.newAuthor = "";
-          $scope.newDescription = "";
+          bCtrl.newTitle = "";
+          bCtrl.newAuthor = "";
+          bCtrl.newDescription = "";
 
           $('form.collapse').collapse();
         });
       });
     } else {
       var params = {
-        author: $scope.newAuthor,
-        title: $scope.newTitle,
-        desc: $scope.newDescription
+        author: bCtrl.newAuthor,
+        title: bCtrl.newTitle,
+        desc: bCtrl.newDescription
       };
 
       bookFactory.addAuthor(params).then(function(response) {
         bookFactory.getBooks().then(function(books) {
-          $scope.currentBooks = [];
+          bCtrl.currentBooks = [];
           for (var i = 0; i < books.data.data.length; i++) {
             var tmp = books.data.data[i];
-            $scope.currentBooks.push({
+            bCtrl.currentBooks.push({
               id: i,
               book_id: tmp.book_id,
               title: tmp.title,
@@ -323,9 +324,9 @@ angular.module('booksForUs', ['ui.bootstrap'])
             });
           }
 
-          $scope.newTitle = "";
-          $scope.newAuthor = "";
-          $scope.newDescription = "";
+          bCtrl.newTitle = "";
+          bCtrl.newAuthor = "";
+          bCtrl.newDescription = "";
 
           $('form.collapse').slideUp();
         });
@@ -333,7 +334,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
     }
   };
 
-  $scope.modelOptions = {
+  bCtrl.modelOptions = {
     debounce: {
       default: 500,
       blur: 250
@@ -343,22 +344,22 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
   bookFactory.currentSession().then(function(response) {
     if (response.data.user != null) {
-      $scope.username = response.data.user;
-      $scope.isLoggedIn = true;
+      bCtrl.username = response.data.user;
+      bCtrl.isLoggedIn = true;
       bookFactory.getFavorites().then(function(response) {
         for (var i = 0; i < response.data.data.length; i++) {
           var id = response.data.data[i].book_id;
-          $scope.currentFavorites.push(id);
-          for (var j = 0; j < $scope.currentBooks.length; j++) {
-            if (id == $scope.currentBooks[j].book_id) {
-              $scope.currentBooks[j].favorite = true;
+          bCtrl.currentFavorites.push(id);
+          for (var j = 0; j < bCtrl.currentBooks.length; j++) {
+            if (id == bCtrl.currentBooks[j].book_id) {
+              bCtrl.currentBooks[j].favorite = true;
               break;
             }
           }
         }
       });
     } else {
-      $scope.isLoggedIn = false;
+      bCtrl.isLoggedIn = false;
     }
   });
 

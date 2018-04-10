@@ -5,7 +5,7 @@
 </head>
 
 <body>
-  <div class="wrapper" ng-controller="bookController">
+  <div class="wrapper" ng-controller="bookController as bCtrl">
 
     <div id="sidebar">
       <br>
@@ -13,27 +13,27 @@
       <ul id="sidebar-list" class="list-unstyled components">
         <li>
           <form class="login-signup-form">
-            <div ng-if="isLoggedin">
+            <div ng-if="bCtrl.isLoggedin">
               <h4>Welcome</h4>
               <h2>{{username}}</h2>
             </div>
-            <div class="form-group" ng-if="!isLoggedin">
+            <div class="form-group" ng-if="!bCtrl.isLoggedin">
               <label for="username">Username</label>
-              <input type="text" class="form-control" ng-model="username" placeholder="Username">
+              <input type="text" class="form-control" ng-model="bCtrl.username" placeholder="Username">
             </div>
-            <div class="form-group" ng-if="!isLoggedin">
+            <div class="form-group" ng-if="!bCtrl.isLoggedin">
               <label for="password">Password</label>
-              <input type="password" class="form-control" ng-model="password" placeholder="Password">
+              <input type="password" class="form-control" ng-model="bCtrl.password" placeholder="Password">
             </div>
-            <input ng-if="!isLoggedin" class="login-button" type="button" ng-click="login()" value="Login">
-            <input ng-if="isLoggedin" class="login-button" type="button" ng-click="logout()" value="Logout">
-            <input ng-if="!isLoggedin" class="signup-button" type="button" ng-click="signup()" value="Signup">
+            <input ng-if="!bCtrl.isLoggedin" class="login-button" type="button" ng-click="bCtrl.login()" value="Login">
+            <input ng-if="bCtrl.isLoggedin" class="login-button" type="button" ng-click="bCtrl.logout()" value="Logout">
+            <input ng-if="!bCtrl.isLoggedin" class="signup-button" type="button" ng-click="bCtrl.signup()" value="Signup">
           </form>
         </li>
         <br>
         <li>
-          <button ng-if="isLoggedin" class="side-bar-btn" type="button" ng-click="changeView()">
-            <h2>{{view}}</h2>
+          <button ng-if="bCtrl.isLoggedin" class="side-bar-btn" type="button" ng-click="bCtrl.changeView()">
+            <h2>{{bCtrl.view}}</h2>
           </button>
         </li>
         <br>
@@ -41,18 +41,18 @@
           <button class="side-bar-btn" data-target="#add-book-collapse" data-toggle="collapse" aria-expanded="false">
             <h2>Add Book</h2>
           </button>
-          <form class="add-book-form collapse list-unstyled" id="add-book-collapse" ng-submit="addBook()">
+          <form class="add-book-form collapse list-unstyled" id="add-book-collapse" ng-submit="bCtrl.addBook()">
             <div class="form-group">
               <label for="title">Title</label>
-              <input ng-model="newTitle" type="text" class="form-control" id="title">
+              <input ng-model="bCtrl.newTitle" type="text" class="form-control" id="title">
             </div>
             <div class="form-group">
               <label for="author">Author</label>
-              <input id="author" type="text" ng-model="newAuthor" ng-model-options="modelOptions" uib-typeahead="author.name for author in currentAuthors | filter:$viewValue" class="form-control">
+              <input id="author" type="text" ng-model="bCtrl.newAuthor" ng-model-options="modelOptions" uib-typeahead="author.name for author in currentAuthors | filter:$viewValue" class="form-control">
             </div>
             <div class="form-group">
               <label for="description">Description</label>
-              <textarea ng-model="newDescription" class="form-control" id="description" rows="3"></textarea>
+              <textarea ng-model="bCtrl.newDescription" class="form-control" id="description" rows="3"></textarea>
             </div>
             <input class="add-button" type="submit" name="" value="Add">
           </form>
@@ -65,25 +65,25 @@
         <h1 class="heading">Books for Us</h1>
         <form class="form-inline">
           <div class="form-group">
-            <input ng-model="search" type="text" class="form-control" placeholder="Search">
+            <input ng-model="bCtrl.search" type="text" class="form-control" placeholder="Search">
           </div>
           <div class="form-group">
             <span class="filter-option">Titles</span>
-            <span ng-click="titleFilter(1)" class="filter-icon glyphicon glyphicon-arrow-up"></span>
-            <span ng-click="titleFilter(0)" class="filter-icon glyphicon glyphicon-arrow-down"></span>
+            <span ng-click="bCtrl.titleFilter(1)" class="filter-icon glyphicon glyphicon-arrow-up"></span>
+            <span ng-click="bCtrl.titleFilter(0)" class="filter-icon glyphicon glyphicon-arrow-down"></span>
           </div>
           <div class="form-group">
             <span class="filter-option">Scores</span>
-            <span ng-click="scoreFilter(1)" class="filter-icon glyphicon glyphicon-arrow-up"></span>
-            <span ng-click="scoreFilter(0)" class="filter-icon glyphicon glyphicon-arrow-down"></span>
+            <span ng-click="bCtrl.scoreFilter(1)" class="filter-icon glyphicon glyphicon-arrow-up"></span>
+            <span ng-click="bCtrl.scoreFilter(0)" class="filter-icon glyphicon glyphicon-arrow-down"></span>
           </div>
         </form>
       </div>
       <div class="content-body">
-          <div class="results" ng-if="viewAllBooks">
-            <div class="card" ng-repeat="book in currentBooks | filter:search | orderBy:propertyName:reverse">
+          <div class="results" ng-if="bCtrl.viewAllBooks">
+            <div class="card" ng-repeat="book in bCtrl.currentBooks | filter:bCtrl.search | orderBy:bCtrl.propertyName:bCtrl.reverse">
               <div class="card-body">
-                <span ng-if="isLoggedin" id="h{{book.book_id}}" ng-class="book.favorite ? 'red-heart' : 'black-heart'" class="heart glyphicon glyphicon-heart" ng-click="toggleFavorite(book.book_id)"></span>
+                <span ng-if="bCtrl.isLoggedin" id="h{{book.book_id}}" ng-class="book.favorite ? 'red-heart' : 'black-heart'" class="heart glyphicon glyphicon-heart" ng-click="bCtrl.toggleFavorite(book.book_id)"></span>
                 <h5 class="card-title"> {{book.title}} </h5>
                 <p class="card-text"> {{book.description}} </p>
               </div>
@@ -94,22 +94,17 @@
                 <li class="list-group-item">
                   Score:
                   <span class="score"> {{book.score}} </span>
-                  <span class="score-vote glyphicon glyphicon-thumbs-up" ng-click="incrementScore(book.id)"></span>
-                  <span class="score-vote glyphicon glyphicon-thumbs-down" ng-click="decrementScore(book.id)"></span>
+                  <span class="score-vote glyphicon glyphicon-thumbs-up" ng-click="bCtrl.incrementScore(book.id)"></span>
+                  <span class="score-vote glyphicon glyphicon-thumbs-down" ng-click="bCtrl.decrementScore(book.id)"></span>
                 </li>
               </ul>
-
-              <div class="comments">
-                <div class="comment">
-                </div>
-              </div>
             </div>
           </div>
 
-          <div class="results" ng-if="!viewAllBooks">
-            <div class="card" ng-repeat="book in currentBooks | filter:{favorite:true} | filter:search | orderBy:propertyName:reverse">
+          <div class="results" ng-if="!bCtrl.viewAllBooks">
+            <div class="card" ng-repeat="book in bCtrl.currentBooks | filter:{favorite:true} | filter:bCtrl.search | orderBy:bCtrl.propertyName:bCtrl.reverse">
               <div class="card-body">
-                <span ng-if="isLoggedin" id="h{{book.book_id}}" ng-class="book.favorite ? 'red-heart' : 'black-heart'" class="heart glyphicon glyphicon-heart" ng-click="toggleFavorite(book.book_id)"></span>
+                <span ng-if="bCtrl.isLoggedin" id="h{{book.book_id}}" ng-class="book.favorite ? 'red-heart' : 'black-heart'" class="heart glyphicon glyphicon-heart" ng-click="bCtrl.toggleFavorite(book.book_id)"></span>
                 <h5 class="card-title"> {{book.title}} </h5>
                 <p class="card-text"> {{book.description}} </p>
               </div>
@@ -120,15 +115,10 @@
                 <li class="list-group-item">
                   Score:
                   <span class="score"> {{book.score}} </span>
-                  <span class="score-vote glyphicon glyphicon-thumbs-up" ng-click="incrementScore(book.id)"></span>
-                  <span class="score-vote glyphicon glyphicon-thumbs-down" ng-click="decrementScore(book.id)"></span>
+                  <span class="score-vote glyphicon glyphicon-thumbs-up" ng-click="bCtrl.incrementScore(book.id)"></span>
+                  <span class="score-vote glyphicon glyphicon-thumbs-down" ng-click="bCtrl.decrementScore(book.id)"></span>
                 </li>
               </ul>
-
-              <div class="comments">
-                <div class="comment">
-                </div>
-              </div>
             </div>
           </div>
       </div>
