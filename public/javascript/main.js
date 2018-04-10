@@ -78,7 +78,9 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
   $scope.logout = function() {
     bookFactory.logout().then(function(response) {
-      $scope.isLoggedin = false;
+      $scope.$applyAsync(function() {
+        $scope.isLoggedin = false;
+      });
     });
   };
 
