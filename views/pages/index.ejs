@@ -28,8 +28,8 @@
         </li>
         <br>
         <li>
-          <button ng-if="isLoggedin" class="side-bar-btn" type="button" name="button">
-            <h2>Favorite Books</h2>
+          <button ng-if="isLoggedin" class="side-bar-btn" type="button" ng-click="changeView()">
+            <h2>{{view}}</h2>
           </button>
         </li>
         <br>
@@ -77,7 +77,7 @@
       </div>
       <div class="content-body">
           <div class="results">
-            <div class="card" ng-repeat="book in currentBooks | filter:search | orderBy:propertyName:reverse">
+            <div class="card" ng-repeat="book in currentBooks | filter:{book_id:currentFavorites} | filter:search | orderBy:propertyName:reverse">
               <div class="card-body">
                 <span ng-if="isLoggedin" id="h{{book.book_id}}" ng-class="book.favorite ? 'red-heart' : 'black-heart'" class="heart glyphicon glyphicon-heart" ng-click="toggleFavorite(book.book_id)"></span>
                 <h5 class="card-title"> {{book.title}} </h5>

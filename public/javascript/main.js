@@ -58,6 +58,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
   $scope.currentFavorites = [];
   $scope.currentAuthors = [];
   $scope.propertyName = 'title';
+  $scope.view = "Favorite Books";
   $scope.username = "";
   $scope.password = "";
   $scope.reverse = false;
@@ -89,6 +90,22 @@ angular.module('booksForUs', ['ui.bootstrap'])
       });
     }
   });
+
+  $scope.changeView = function() {
+    if ($scope.view == "Favorite Books") {
+      $scope.view = "All Books";
+    } else {
+      $scope.view = "Favorite Books";
+    }
+  }
+
+  $scope.allOrFavs = function() {
+    if ($scope.view == "All Books") {
+      return "{book_id:currentFavorites}";
+    } else {
+      return "";
+    }
+  }
 
   $scope.signup = function() {
     var user = {
