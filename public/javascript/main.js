@@ -54,7 +54,9 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
     if (user.username != "" && user.password != "") {
       bookFactory.signup(user).then(function(response) {
-        $scope.isLoggedin = true;
+        $scope.$apply(function(){
+          $scope.isLoggedin = true;
+        });
       });
     }
   };
@@ -67,14 +69,18 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
     if (user.username != "" && user.password != "") {
       bookFactory.login(user).then(function(response) {
-        $scope.isLoggedin = true;
+        $scope.$apply(function(){
+          $scope.isLoggedin = true;
+        });
       });
     }
   };
 
   $scope.logout = function() {
     bookFactory.logout().then(function(response) {
-      $scope.isLoggedin = false;
+      $scope.$apply(function(){
+        $scope.isLoggedin = false;
+      });
     });
   };
 
