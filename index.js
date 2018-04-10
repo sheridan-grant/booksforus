@@ -128,6 +128,7 @@ express()
     			res.status(500).json({success: false, data: error});
     		} else {
           req.session.user = result[0].username;
+          req.session.user_id = result[0].user_id;
     			res.status(200).json({success: true});
     		}
       });
@@ -139,6 +140,7 @@ express()
   			res.status(500).json({success: false, data: error});
   		} else {
         req.session.user = result[0].username;
+        req.session.user_id = result[0].user_id;
   			res.status(200).json({success: true});
   		}
     });
@@ -167,7 +169,7 @@ function getFavorites(req, callback) {
     }
 
     var sql = "SELECT * FROM favorite_books_list f WHERE f.user_id = $1";
-    var params = [req.session.user];
+    var params = [req.session.user_id];
 
     client.query(sql, params, function(err, result) {
 
@@ -200,7 +202,7 @@ function addFavorite(req, callback) {
     }
 
     var sql = "INSERT INTO favorite_books_list (user_id, book_id) VALUES ($1, $2);";
-    var params = [req.session.user, req.body.book_id];
+    var params = [req.session.user_id, req.body.book_id];
 
     client.query(sql, params, function(err, result) {
 
@@ -233,7 +235,7 @@ function removeFavorite(req, callback) {
     }
 
     var sql = "DELETE FROM favorite_books_list f WHERE f.user_id = $1 AND f.book_id = $2;";
-    var params = [req.session.user, req.body.book_id];
+    var params = [req.session.user_id, req.body.book_id];
 
     client.query(sql, params, function(err, result) {
 
