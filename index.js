@@ -112,7 +112,9 @@ express()
   .post('/logout', function(req, res) {
     if (req.session.user) {
       req.session.destroy();
-      res.send({ success: true });
+      res.status(200).json({success: true});
+    } else {
+      res.status(200).json({success: false});
     }
   })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
