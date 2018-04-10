@@ -345,6 +345,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
 
   bookFactory.currentSession().then(function(response) {
     if (response.data.user != null) {
+      $scope.username = response.data.user;
       $scope.isLoggedIn = true;
       bookFactory.getFavorites().then(function(response) {
         for (var i = 0; i < response.data.data.length; i++) {

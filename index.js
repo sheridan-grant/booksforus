@@ -99,7 +99,6 @@ express()
           if (error || data == null) {
       			res.status(500).json({success: false, data: error});
       		} else {
-            console.log(data);
             req.body.author = data[0].author_id;
             addBook(req, function(error, bookResult) {
               if (error || bookResult == null) {
@@ -128,7 +127,7 @@ express()
         if (error || result == null) {
     			res.status(500).json({success: false, data: error});
     		} else {
-          req.session.user = result[0].user_id;
+          req.session.user = result[0].username;
     			res.status(200).json({success: true});
     		}
       });
@@ -139,7 +138,7 @@ express()
       if (error || result == null) {
   			res.status(500).json({success: false, data: error});
   		} else {
-        req.session.user = result[0].user_id;
+        req.session.user = result[0].username;
   			res.status(200).json({success: true});
   		}
     });
