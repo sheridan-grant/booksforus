@@ -40,11 +40,11 @@ angular.module('booksForUs', ['ui.bootstrap'])
   }
 
   bookFactory.addFavorite = function(book_id) {
-    return $http.get("/addFavorite", book_id);
+    return $http.post("/addFavorite", book_id);
   }
 
   bookFactory.removeFavorite = function(book_id) {
-    return $http.get("/removeFavorite", book_id);
+    return $http.post("/removeFavorite", book_id);
   }
 
   return bookFactory;
@@ -135,7 +135,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
           $scope.currentBooks[i].favorite = false;
         }
       }
-      
+
       bookFactory.removeFavorite(params).then(function(response) {
         console.log('remove - ', response);
       });
