@@ -99,7 +99,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
           setTimeout(function(){
             bCtrl.isLoggedIn = true;
             bCtrl.username = response.data.user;
-          });
+          }, 10);
         });
       } else {
         bCtrl.isLoggedIn = false;
