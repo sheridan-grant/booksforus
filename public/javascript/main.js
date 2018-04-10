@@ -103,7 +103,7 @@ angular.module('booksForUs', ['ui.bootstrap'])
     if ($scope.view == "All Books") {
       return "{book_id:currentFavorites}";
     } else {
-      return "";
+      return "{book_id:currentBooks}";
     }
   }
 

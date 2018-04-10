@@ -77,7 +77,7 @@
       </div>
       <div class="content-body">
           <div class="results">
-            <div class="card" ng-repeat="book in currentBooks | filter:{book_id:currentFavorites} | filter:search | orderBy:propertyName:reverse">
+            <div class="card" ng-repeat="book in currentBooks | filter:allOrFavs | filter:search | orderBy:propertyName:reverse">
               <div class="card-body">
                 <span ng-if="isLoggedin" id="h{{book.book_id}}" ng-class="book.favorite ? 'red-heart' : 'black-heart'" class="heart glyphicon glyphicon-heart" ng-click="toggleFavorite(book.book_id)"></span>
                 <h5 class="card-title"> {{book.title}} </h5>
